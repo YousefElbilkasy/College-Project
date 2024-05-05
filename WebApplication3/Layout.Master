@@ -1,0 +1,139 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Layout.master.cs" Inherits="WebApplication3.Layout" %>
+
+<!DOCTYPE aspx>
+
+<aspx>
+<head runat="server">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&amp;display=swap"
+    rel="stylesheet" />
+  <!-- CSS File -->
+  <link
+    rel="stylesheet"
+    href="css/master.css" />
+  <asp:ContentPlaceHolder ID="PrivateStyle" runat="server"></asp:ContentPlaceHolder>
+  <!-- Normalize File -->
+  <link
+    rel="stylesheet"
+    href="css/normalize.css" />
+  <!-- Tab Icon -->
+  <link
+    rel="shortcut icon"
+    href="imgs/logo (2).png"
+    type="image/png" />
+  <!-- Font Awesome Library -->
+  <link
+    rel="stylesheet"
+    href="css/all.min.css" />
+  <!-- Bootstrap -->
+  <!-- <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />-->
+  <title>
+    <asp:ContentPlaceHolder ID="PageTitle" runat="server"></asp:ContentPlaceHolder> - College Management System
+  </title>
+</head>
+<body>
+  <form id="form1" runat="server">
+    <!-- Start Navbar -->
+    <nav>
+      <div class="logo">
+        <a href="Default.aspx">
+          <img
+            src="imgs/logo (2).png"
+            alt="" /></a>
+      </div>
+      <div class="links">
+        <a href="Default.aspx" class="home">HOME</a>
+        <a href="about.aspx" class="about">ABOUT</a>
+        <a href="contact.aspx" class="contact">CONTACT</a>
+        <a href="log_in.aspx" class="log-in">LOG IN</a>
+        <a href="sign_up.aspx" class="sign-up">SIGN UP</a>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <!--Start Content-->
+    <asp:ContentPlaceHolder ID="ContentBody" runat="server"></asp:ContentPlaceHolder>
+    <!--End Content-->
+
+    <!-- Start Footer -->
+
+    <div class="footer-container">
+      <div class="footer-main-container">
+        <div class="first-column">
+          <a href="Default.aspx">
+            <img
+              src="imgs/logo (2).png"
+              alt="" /></a>
+          <p>
+            Far far away, behind the word mountains, far from the countries
+            Vokalia and Consonantia, there live the blind texts.
+          </p>
+          <div class="social-media-icons">
+            <a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-square-instagram"></i></a>
+            <a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-square-x-twitter"></i></a>
+          </div>
+        </div>
+        <div class="second-column">
+          <h2>Pages</h2>
+          <div class="pages-links">
+            <a href="Default.aspx">Home</a>
+            <a href="about.aspx">About</a>
+            <a href="contact.aspx">Contact</a>
+            <a href="log_in.aspx">Log In</a>
+            <a href="sign_up.aspx">Sign Up</a>
+          </div>
+        </div>
+        <div class="third-column">
+          <h2>Have a Questions?</h2>
+          <div class="address">
+            <i class="fa-solid fa-map"></i>
+            <p>El-Gish Street, Kafr Elsheikh, Arab Republic of Egypt.</p>
+          </div>
+          <div class="phone">
+            <i class="fa-solid fa-phone"></i>
+            <a href="tel:+201096554062">(+2) 01096554062</a>
+          </div>
+          <div class="email">
+            <i class="fa-solid fa-paper-plane"></i>
+            <a href="mailto:info@fci.kfs.edu.eg">info@fci.kfs.edu.eg</a>
+          </div>
+        </div>
+      </div>
+      <div class="sub-container">
+        <p>
+          Copyright © 2023 All rights reserved | This template is made with 🧡 by
+          <span><a
+            href="https://yousefelbilkasy.bio.link/"
+            target="_blank"
+            rel="noopener noreferrer">Yousef Elbilkasy</a></span>
+          & <span>Alaa Elhabashy</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- End Footer -->
+
+    <!-- Bootstrap -->
+    <!-- <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script> -->
+  </form>
+</body>
+</aspx>

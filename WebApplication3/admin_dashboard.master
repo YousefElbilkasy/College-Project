@@ -1,0 +1,125 @@
+<%@ Master Language="C#" MasterPageFile="~/Layout.Master" AutoEventWireup="true" CodeBehind="admin_dashboard.master.cs" Inherits="WebApplication3.NestedMasterPage2" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="PrivateStyle" runat="server">
+  <link href="css/admin_dashboard.css" rel="stylesheet" />
+  <asp:ContentPlaceHolder ID="PrivateStyle2" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="PageTitle" runat="server">
+  Admin Dashboard
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentBody" runat="server">
+  <!-- Start Dashboard -->
+
+  <!-- Start First Column -->
+
+  <div class="big-container">
+    <div class="first-column-container">
+      <div class="info-container">
+        <div class="courses">
+          <a
+            href="courses_for_admin.aspx"
+            class="courses-link"
+            onclick="openPopup()"
+            id="info-course-container">
+            <i class="fa-solid fa-book"></i>
+            <p>courses</p>
+          </a>
+        </div>
+        <div class="timetable">
+          <a
+            href="timetable_for_admin.aspx"
+            class="timetable-link"
+            onclick="openPopup()"
+            id="info-timetable-container">
+            <i class="fa-regular fa-calendar-days"></i>
+            <p>time table</p>
+          </a>
+        </div>
+        <div class="student-menu">
+          <a
+            href="students_for_admin.aspx"
+            class="student-link"
+            onclick="openPopup()"
+            id="info-assignment-container">
+            <i class="fa-solid fa-user-graduate"></i>
+            <p>students</p>
+          </a>
+        </div>
+        <div class="prof">
+          <a
+            href="profs_for_admin.aspx"
+            class="prof-link"
+            onclick="openPopup()"
+            id="info-prof-container">
+            <i class="fa-solid fa-user-tie"></i>
+            <p>professors</p>
+          </a>
+        </div>
+
+        <div class="ass-prof">
+          <a
+            href="ass_prof_for_admin.aspx"
+            class="ass-prof-link"
+            onclick="openPopup()"
+            id="info-ass-prof-container">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            <p>assistant professors</p>
+          </a>
+        </div>
+
+        <div class="verification">
+          <a
+            href="verification_for_admin.aspx"
+            class="verification-link"
+            onclick="openPopup()"
+            id="info-verification-container">
+            <i class="fa-solid fa-user-check"></i>
+            <p>verification</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="edit-container">
+        <div class="setting-container">
+          <a href="">
+            <i class="fa-solid fa-gear"></i>
+            <p>Settings</p>
+          </a>
+        </div>
+        <div class="log-out-container">
+          <a href="log_in.aspx">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <p>log out</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+      <div class="header-container">
+        <!--{% block search %} {% endblock search %}-->
+
+      <div class="header-end-container">
+        <i class="fa-solid fa-bell"></i>
+        <div class="profile-container">
+          <i class="fa-solid fa-user"></i>
+          <div class="account-details">
+            <h6>Mr. Admin</h6>
+            <p>Admin</p>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="container">
+        <div class="assignment">
+          <asp:ContentPlaceHolder ID="ContentForAdminDashboard" runat="server"></asp:ContentPlaceHolder>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- End First Column -->
+
+  <!-- End Dashboard -->
+</asp:Content>
