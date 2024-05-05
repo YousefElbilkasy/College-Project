@@ -9,3 +9,90 @@
   -o-border-radius: 10px;
   border-radius: 10px;
 }
+
+.container {
+  width: 100%;
+  margin: 0;
+  padding: 10px 30px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.panel-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.panel-body > div:not(.lectures-control-footer) {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+
+.form-control {
+  width: 48%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.form-control:not(:last-child):focus {
+  outline: 2px solid var(--main-color);
+}
+
+.lectures-control-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f8f9fa;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f2f2f2;
+}

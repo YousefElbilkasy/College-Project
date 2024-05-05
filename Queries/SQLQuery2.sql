@@ -1,91 +1,99 @@
-﻿CREATE TABLE Students (
-    StudentID INT IDENTITY(1,1) PRIMARY KEY,
-    FirstName NVARCHAR(50) NOT NULL,
-    LastName NVARCHAR(50) NOT NULL,
-    MiddleName NVARCHAR(50) NULL,
-    ContactNumber VARCHAR(11) NOT NULL UNIQUE,
-    NationalID VARCHAR(14) NOT NULL UNIQUE,
-    Email NVARCHAR(255) NOT NULL UNIQUE,
-    Password NVARCHAR(100) NOT NULL,
-    DateOfBirth DATE NOT NULL,
-    ClassLevel NVARCHAR(20) NOT NULL,
-    Gender NVARCHAR(10) NOT NULL
+﻿create table Students
+(
+  StudentID int identity(1,1) primary key,
+  FirstName nvarchar(50) not null,
+  LastName nvarchar(50) not null,
+  MiddleName nvarchar(50) null,
+  ContactNumber varchar(11) not null unique,
+  NationalID varchar(14) not null unique,
+  Email nvarchar(255) not null unique,
+  Password nvarchar(100) not null,
+  DateOfBirth date not null,
+  ClassLevel nvarchar(20) not null,
+  Gender nvarchar(10) not null
 );
 
-CREATE TABLE Professors (
-    ProfessorID INT IDENTITY(1,1) PRIMARY KEY,
-    FirstName NVARCHAR(50) NOT NULL,
-    LastName NVARCHAR(50) NOT NULL,
-    MiddleName NVARCHAR(50) NULL,
-    ContactNumber VARCHAR(11) NOT NULL UNIQUE,
-    NationalID VARCHAR(14) NOT NULL UNIQUE,
-    Email NVARCHAR(255) NOT NULL UNIQUE,
-    Password NVARCHAR(100) NOT NULL,
-    DateOfBirth DATE NOT NULL,
-    Gender NVARCHAR(10) NOT NULL
+create table Professors
+(
+  ProfessorID int identity(1,1) primary key,
+  FirstName nvarchar(50) not null,
+  LastName nvarchar(50) not null,
+  MiddleName nvarchar(50) null,
+  ContactNumber varchar(11) not null unique,
+  NationalID varchar(14) not null unique,
+  Email nvarchar(255) not null unique,
+  Password nvarchar(100) not null,
+  DateOfBirth date not null,
+  Gender nvarchar(10) not null
 );
 
-CREATE TABLE AssistantProfessors (
-    AssistantProfessorID INT IDENTITY(1,1) PRIMARY KEY,
-    FirstName NVARCHAR(50) NOT NULL,
-    LastName NVARCHAR(50) NOT NULL,
-    MiddleName NVARCHAR(50) NULL,
-    ContactNumber VARCHAR(11) NOT NULL UNIQUE,
-    NationalID VARCHAR(14) NOT NULL UNIQUE,
-    Email NVARCHAR(255) NOT NULL UNIQUE,
-    Password NVARCHAR(100) NOT NULL,
-    DateOfBirth DATE NOT NULL,
-    Gender NVARCHAR(10) NOT NULL
+create table AssistantProfessors
+(
+  AssistantProfessorID int identity(1,1) primary key,
+  FirstName nvarchar(50) not null,
+  LastName nvarchar(50) not null,
+  MiddleName nvarchar(50) null,
+  ContactNumber varchar(11) not null unique,
+  NationalID varchar(14) not null unique,
+  Email nvarchar(255) not null unique,
+  Password nvarchar(100) not null,
+  DateOfBirth date not null,
+  Gender nvarchar(10) not null
 );
-ALTER TABLE Students
-    ADD IsVerified BIT DEFAULT 0 NOT NULL;
+alter table Students
+    add IsVerified BIT default 0 not null;
 
-ALTER TABLE Professors
-    ADD IsVerified BIT DEFAULT 0 NOT NULL;
+alter table Professors
+    add IsVerified BIT default 0 not null;
 
-ALTER TABLE AssistantProfessors
-    ADD IsVerified BIT DEFAULT 0 NOT NULL;
+alter table AssistantProfessors
+    add IsVerified BIT default 0 not null;
 
-	CREATE TABLE Rooms (
-    RoomID INT IDENTITY(1,1) PRIMARY KEY,
-    RoomName NVARCHAR(50) NOT NULL UNIQUE,
-    Capacity INT DEFAULT 30 -- Optional: Define the default room capacity if needed
-);
-
-	CREATE TABLE Timetable (
-    TimetableID INT IDENTITY(1,1) PRIMARY KEY,
-    CourseID INT NOT NULL,
-    ProfessorID INT NOT NULL,
-    RoomID INT NOT NULL,
-    Day NVARCHAR(10) NOT NULL,
-    StartTime TIME NOT NULL,
-    EndTime TIME NOT NULL,
-    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID),
-    FOREIGN KEY (ProfessorID) REFERENCES Professors(ProfessorID),
-    FOREIGN KEY (RoomID) REFERENCES Rooms(RoomID)
+create table Rooms
+(
+  RoomID int identity(1,1) primary key,
+  RoomName nvarchar(50) not null unique,
+  Capacity int default 30
+  -- Optional: Define the default room capacity if needed
 );
 
-			CREATE TABLE Sections (
-    SectionID INT IDENTITY(1,1) PRIMARY KEY,
-    CourseID INT NOT NULL,
-    SectionName NVARCHAR(50) NOT NULL,
-    AssistantProfessorID INT NOT NULL,
-    Day NVARCHAR(10) NOT NULL,
-    StartTime TIME NOT NULL,
-    EndTime TIME NOT NULL,
-    RoomID INT NOT NULL,
-    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID),
-    FOREIGN KEY (AssistantProfessorID) REFERENCES AssistantProfessors(AssistantProfessorID),
-    FOREIGN KEY (RoomID) REFERENCES Rooms(RoomID)
+create table Timetable
+(
+  TimetableID int identity(1,1) primary key,
+  CourseID int not null,
+  ProfessorID int not null,
+  RoomID int not null,
+  Day nvarchar(10) not null,
+  StartTime time not null,
+  EndTime time not null,
+  foreign key (CourseID) references Courses(CourseID),
+  foreign key (ProfessorID) references Professors(ProfessorID),
+  foreign key (RoomID) references Rooms(RoomID)
+);
+
+create table Sections
+(
+  SectionID int identity(1,1) primary key,
+  CourseID int not null,
+  SectionName nvarchar(50) not null,
+  AssistantProfessorID int not null,
+  Day nvarchar(10) not null,
+  StartTime time not null,
+  EndTime time not null,
+  RoomID int not null,
+  foreign key (CourseID) references Courses(CourseID),
+  foreign key (AssistantProfessorID) references AssistantProfessors(AssistantProfessorID),
+  foreign key (RoomID) references Rooms(RoomID)
 );
 
 -- Add test rooms to the Rooms table
-INSERT INTO Rooms (RoomName, Capacity)
-VALUES
-    ('Room A101', 30),
-    ('Room B202', 25),
-    ('Room C303', 20),
-    ('Room D404', 40),
-    ('Room E505', 35),
-    ('Room F606', 50);
+insert into Rooms
+  (RoomName, Capacity)
+values
+  ('Room A101', 30),
+  ('Room B202', 25),
+  ('Room C303', 20),
+  ('Room D404', 40),
+  ('Room E505', 35),
+  ('Room F606', 50);
 
