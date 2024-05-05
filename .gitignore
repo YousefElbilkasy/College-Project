@@ -385,3 +385,6 @@ FodyWeavers.xsd
 /WebApplication3/Web.config
 /WebApplication3/Web.Debug.config
 /WebApplication3/Web.Release.config
+/WebApplication3/Web.config
+/WebApplication3/Web.Debug.config
+/WebApplication3/Web.Release.config
