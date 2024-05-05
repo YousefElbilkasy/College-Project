@@ -119,6 +119,7 @@
     <Content Include="attendance_for_student.aspx" />
     <Content Include="courses_for_admin.aspx" />
     <Content Include="courses_for_student.aspx" />
+    <Content Include="Jquery DDL.aspx" />
     <Content Include="log_in.aspx" />
     <Content Include="profs_for_admin.aspx" />
     <Content Include="sign_up.aspx" />
@@ -176,6 +177,13 @@
     </Compile>
     <Compile Include="courses_for_student.aspx.designer.cs">
       <DependentUpon>courses_for_student.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Jquery DDL.aspx.cs">
+      <DependentUpon>Jquery DDL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Jquery DDL.aspx.designer.cs">
+      <DependentUpon>Jquery DDL.aspx</DependentUpon>
     </Compile>
     <Compile Include="log_in.aspx.cs">
       <DependentUpon>log_in.aspx</DependentUpon>
