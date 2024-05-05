@@ -142,26 +142,63 @@ namespace WebApplication3
         // Load sections data into SectionsRepeater
         private void LoadSectionsData()
         {
+            // Get the course ID from the dropdown
             int courseID = Convert.ToInt32(ddlCourse.SelectedValue);
+
+            // Check if the course has sections enabled
+            if (HasSections(courseID))
+            {
+                // Load sections data if the course has sections enabled
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = @"
+                        SELECT s.SectionID, s.SectionName, s.Day, s.StartTime, s.EndTime, r.RoomName, ap.FirstName + ' ' + ap.LastName AS AssistantProfessorName
+                        FROM Sections s
+                        JOIN Rooms r ON s.RoomID = r.RoomID
+                        JOIN AssistantProfessors ap ON s.AssistantProfessorID = ap.AssistantProfessorID
+                        WHERE s.CourseID = @CourseID";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@CourseID", courseID);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            SectionsRepeater.DataSource = reader;
+                            SectionsRepeater.DataBind();
+                        }
+                    }
+                }
+
+                // Show sections table and section details
+                sectionTable.Style["display"] = "block";
+                sectionDetails.Style["display"] = "block";
+            }
+            else
+            {
+                // Hide sections table and section details if the course does not have sections
+                sectionTable.Style["display"] = "none";
+                sectionDetails.Style["display"] = "none";
+            }
+        }
+
+        // Helper method to check if a course has sections enabled
+        private bool HasSections(int courseID)
+        {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"
-                    SELECT s.SectionID, s.SectionName, s.Day, s.StartTime, s.EndTime, r.RoomName, ap.FirstName + ' ' + ap.LastName AS AssistantProfessorName
-                    FROM Sections s
-                    JOIN Rooms r ON s.RoomID = r.RoomID
-                    JOIN AssistantProfessors ap ON s.AssistantProfessorID = ap.AssistantProfessorID
-                    WHERE s.CourseID = @CourseID";
+                string query = "SELECT HasSection FROM Courses WHERE CourseID = @CourseID";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@CourseID", courseID);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
                     {
-                        SectionsRepeater.DataSource = reader;
-                        SectionsRepeater.DataBind();
+                        return Convert.ToBoolean(result);
                     }
                 }
             }
+            return false;
         }
 
         // Handle adding or updating timetable entries
@@ -194,13 +231,27 @@ namespace WebApplication3
             int courseID = Convert.ToInt32(ddlCourse.SelectedValue);
             if (courseID > 0)
             {
-                LoadSectionsData(); // Load sections for the selected course
-                sectionDetails.Style["display"] = "block";
-                lblSectionName.Text = ddlCourse.SelectedItem.Text + " Section";
-                sectionTable.Style["display"] = "block"; // Show existing sections
+                // Check if the selected course has sections enabled
+                if (HasSections(courseID))
+                {
+                    // Load and display sections for the selected course
+                    LoadSectionsData();
+                    // Display section details
+                    sectionDetails.Style["display"] = "block";
+                    lblSectionName.Text = ddlCourse.SelectedItem.Text + " Section";
+                    // Show sections table
+                    sectionTable.Style["display"] = "block";
+                }
+                else
+                {
+                    // Hide section details and sections table if the course has no sections
+                    sectionDetails.Style["display"] = "none";
+                    sectionTable.Style["display"] = "none";
+                }
             }
             else
             {
+                // Hide section details and sections table if no valid course is selected
                 sectionDetails.Style["display"] = "none";
                 sectionTable.Style["display"] = "none";
             }
@@ -528,7 +579,6 @@ namespace WebApplication3
                 LoadTimetableData(); // Reload the timetable data after deletion
             }
         }
-
 
         // Delete a timetable entry
         private void DeleteTimetableEntry(int timetableID)

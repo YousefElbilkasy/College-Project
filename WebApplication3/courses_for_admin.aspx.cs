@@ -1,89 +1,101 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace WebApplication3
 {
-    public partial class courses_for_admin : System.Web.UI.Page
+    public partial class courses_for_admin : Page
     {
-        // Connection string from configuration file
-        private readonly string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        // Update the connection string with your actual connection string
+        private string connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
-        protected void btnAddCourse_Click(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            // Retrieve form data
+            if (!IsPostBack)
+            {
+                // Load and bind current courses when the page loads for the first time
+                BindCurrentCourses();
+            }
+        }
+
+        protected void BtnAddCourse_Click(object sender, EventArgs e)
+        {
+            // Retrieve input values
             string courseName = txtCourseName.Text;
-            int courseHours;
-            TimeSpan courseTime;
-            int professorID;
-            int assistantProfessorID = 0;
             bool hasSection = chkHasSection.Checked;
 
-            // Validate and parse course hours
-            if (!int.TryParse(txtCourseHours.Text, out courseHours))
+            // Validate course hours input
+            if (!int.TryParse(txtCourseHours.Text, out int courseHours))
             {
-                lblMessage.Text = "Invalid course hours.";
+                lblMessage.Text = "Invalid course hours. Please enter a valid number.";
                 return;
             }
 
-            // Validate and parse course time
-            if (!TimeSpan.TryParse(txtCourseTime.Text, out courseTime))
-            {
-                lblMessage.Text = "Invalid course time. Please enter time in the format HH:mm (e.g., 09:00 for 9:00 AM).";
-                return;
-            }
+            // SQL query to insert the new course
+            string query = "INSERT INTO Courses (CourseName, Hours, HasSection) VALUES (@CourseName, @Hours, @HasSection)";
 
-            // Validate and parse professor ID
-            if (!int.TryParse(txtProfessorID.Text, out professorID))
+            try
             {
-                lblMessage.Text = "Invalid professor ID.";
-                return;
-            }
-
-            // Validate and parse assistant professor ID (if provided)
-            if (!string.IsNullOrEmpty(txtAssistantProfessorID.Text))
-            {
-                if (!int.TryParse(txtAssistantProfessorID.Text, out assistantProfessorID))
+                // Using statement for proper resource disposal
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    lblMessage.Text = "Invalid assistant professor ID.";
-                    return;
-                }
-            }
+                    conn.Open();
 
-            // Open a SQL connection
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-
-                // Create a SQL command to insert course data
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = connection;
-                    cmd.CommandText = @"
-                        INSERT INTO Courses (CourseName, ProfessorID, AssistantProfessorID, Hours, CourseTime, HasSection)
-                        VALUES (@courseName, @professorID, @assistantProfessorID, @courseHours, @courseTime, @hasSection)";
-
-                    // Add parameters
-                    cmd.Parameters.AddWithValue("@courseName", courseName);
-                    cmd.Parameters.AddWithValue("@professorID", professorID);
-                    cmd.Parameters.AddWithValue("@assistantProfessorID", assistantProfessorID);
-                    cmd.Parameters.AddWithValue("@courseHours", courseHours);
-                    cmd.Parameters.AddWithValue("@courseTime", courseTime);
-                    cmd.Parameters.AddWithValue("@hasSection", hasSection);
-
-                    try
+                    // Create and execute the command
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        // Execute the command
+                        cmd.Parameters.AddWithValue("@CourseName", courseName);
+                        cmd.Parameters.AddWithValue("@Hours", courseHours);
+                        cmd.Parameters.AddWithValue("@HasSection", hasSection);
+
+                        // Execute the query
                         cmd.ExecuteNonQuery();
-                        lblMessage.Text = "Course added successfully!";
-                    }
-                    catch (Exception ex)
-                    {
-                        // Handle error and provide feedback to the user
-                        lblMessage.Text = $"Error adding course: {ex.Message}";
-                        System.Diagnostics.Debug.WriteLine(ex);
                     }
                 }
+
+                // Provide feedback to the user
+                lblMessage.Text = "Course added successfully.";
+
+                // Refresh the list of current courses
+                BindCurrentCourses();
+            }
+            catch (Exception ex)
+            {
+                // Display error message
+                lblMessage.Text = $"Error adding course: {ex.Message}";
+            }
+        }
+
+        private void BindCurrentCourses()
+        {
+            // SQL query to fetch courses from the database
+            string query = "SELECT CourseID, CourseName, Hours, HasSection FROM Courses";
+
+            try
+            {
+                // Using statement for proper resource disposal
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // Create and execute the command
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            // Bind the data reader to the repeater
+                            rptCourses.DataSource = reader;
+                            rptCourses.DataBind();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Display error message
+                lblMessage.Text = $"Error loading courses: {ex.Message}";
             }
         }
     }

@@ -12,12 +12,40 @@
                 
                 <asp:TextBox ID="txtCourseName" runat="server" Placeholder="Course Name"></asp:TextBox>
                 <asp:TextBox ID="txtCourseHours" runat="server" Placeholder="Course Hours" TextMode="Number"></asp:TextBox>
-                <asp:TextBox ID="txtCourseTime" runat="server" Placeholder="Course Time" TextMode="Time"></asp:TextBox>
-                <asp:TextBox ID="txtProfessorID" runat="server" Placeholder="Professor ID" TextMode="Number"></asp:TextBox>
-                <asp:TextBox ID="txtAssistantProfessorID" runat="server" Placeholder="Assistant Professor ID (optional)" TextMode="Number"></asp:TextBox>
                 <asp:CheckBox ID="chkHasSection" runat="server" Text="Has Section" />
-                <asp:Button ID="btnAddCourse" runat="server" Text="Add Course" OnClick="btnAddCourse_Click" />
+                <asp:Button ID="btnAddCourse" runat="server" Text="Add Course" OnClick="BtnAddCourse_Click" />
                 <asp:Label ID="lblMessage" runat="server" />
+                
+                <h2>Current Courses</h2>
+                <asp:Repeater ID="rptCourses" runat="server">
+                    <HeaderTemplate>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Course ID</th>
+                                    <th>Course Name</th>
+                                    <th>Hours</th>
+                                    <th>Has Section</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <tr>
+                            <td><%# Eval("CourseID") %></td>
+                            <td><%# Eval("CourseName") %></td>
+                            <td><%# Eval("Hours") %></td>
+                            <td>
+                          <%# Convert.ToBoolean(Eval("HasSection")) ? "Yes" : "No" %>
+                              </td>
+
+                        </tr>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                            </tbody>
+                        </table>
+                    </FooterTemplate>
+                </asp:Repeater>
             </div>
         </div>
     </div>
