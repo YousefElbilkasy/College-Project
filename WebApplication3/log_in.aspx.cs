@@ -22,9 +22,10 @@ namespace WebApplication3
                     // Set session variables for admin
                     Session["IsAdmin"] = true;
                     Session["Email"] = email;
+                    Session["IsAuthenticated"] = true;
 
-                    // Redirect to admin dashboard
-                    Response.Redirect("verification_for_admin.aspx");
+          // Redirect to admin dashboard
+          Response.Redirect("verification_for_admin.aspx");
                 }
                 else
                 {
