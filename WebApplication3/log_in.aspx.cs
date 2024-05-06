@@ -72,19 +72,19 @@ namespace WebApplication3
                     conn.Open();
 
                     // Check Students table
-                    if (CheckLoginInTable(conn, "Student", email, password, out int studentId))
+                    if (CheckLoginInTable(conn,"Student", email, password, out int studentId))
                     {
                         role = "student";
                         Session["ID"] = studentId; // Set session ID for student
                     }
                     // Check Professors table
-                    else if (CheckLoginInTable(conn, "Professor", email, password, out int professorId))
+                    else if (CheckLoginInTable(conn,"Professor", email, password, out int professorId))
                     {
                         role = "professor";
                         Session["ID"] = professorId; // Set session ID for professor
                     }
                     // Check AssistantProfessors table
-                    else if (CheckLoginInTable(conn, "AssistantProfessor", email, password, out int assistantId))
+                    else if (CheckLoginInTable(conn,"AssistantProfessor", email, password, out int assistantId))
                     {
                         role = "assistant";
                         Session["ID"] = assistantId; // Set session ID for assistant
