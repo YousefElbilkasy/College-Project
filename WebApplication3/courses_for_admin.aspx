@@ -32,7 +32,8 @@
                 </p>
               </div>
               <div class="card-footer">
-                
+                <p>Professor: Dr. </p>
+                <p>Assistant Professor: Eng. </p>
               </div>
             </ItemTemplate>
           </asp:Repeater>

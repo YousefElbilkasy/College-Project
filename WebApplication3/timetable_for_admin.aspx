@@ -219,6 +219,7 @@ Namespace="System.Web.UI" %>
                             CommandArgument='<%# Eval("TimetableID") %>'
                             OnCommand="TimetableRepeater_ItemCommand"
                             class="delete-btn"
+                            OnClientClick="return confirm('Are you sure you want to delete this timetable?');"
                           />
                         </td>
                       </tr>
@@ -266,6 +267,7 @@ Namespace="System.Web.UI" %>
                               CommandName="Delete"
                               CommandArgument='<%# Eval("SectionID") %>'
                               class="delete-btn"
+                              OnClientClick="return confirm('Are you sure you want to delete this timetable?');"
                             />
                           </td>
                         </tr>
