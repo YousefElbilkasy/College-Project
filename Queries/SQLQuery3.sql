@@ -71,3 +71,5 @@ VALUES
 (2, 5, 80.6), -- Alice got 80.6% in Computer Science
 (4, 5, 77.9), -- Emma got 77.9% in Computer Science
 (5, 5, 70.5); -- William got 70.5% in Computer Science
+
+--======================================
