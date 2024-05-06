@@ -39,12 +39,13 @@ Namespace="System.Web.UI" %>
                   runat="server"
                   CssClass="form-control"
                 >
-                  <asp:ListItem Text="Select a Day" selected disabled />
-                  <asp:ListItem Text="Monday" Value="Monday" />
-                  <asp:ListItem Text="Tuesday" Value="Tuesday" />
-                  <asp:ListItem Text="Wednesday" Value="Wednesday" />
-                  <asp:ListItem Text="Thursday" Value="Thursday" />
-                  <asp:ListItem Text="Friday" Value="Friday" />
+                                    <asp:ListItem Text="Select a Day" selected disabled />
+<asp:ListItem Text="Saturday" Value="Saturday" />
+<asp:ListItem Text="Sunday" Value="Sunday" />
+<asp:ListItem Text="Monday" Value="Monday" />
+<asp:ListItem Text="Tuesday" Value="Tuesday" />
+<asp:ListItem Text="Wednesday" Value="Wednesday" />
+<asp:ListItem Text="Thursday" Value="Thursday" />
                 </asp:DropDownList>
                 <asp:TextBox
                   ID="txtStartTime"
@@ -114,11 +115,13 @@ Namespace="System.Web.UI" %>
                   CssClass="form-control"
                 >
                   <asp:ListItem Text="Select a Day" selected disabled />
-                  <asp:ListItem Text="Monday" Value="Monday" />
-                  <asp:ListItem Text="Tuesday" Value="Tuesday" />
-                  <asp:ListItem Text="Wednesday" Value="Wednesday" />
-                  <asp:ListItem Text="Thursday" Value="Thursday" />
-                  <asp:ListItem Text="Friday" Value="Friday" />
+<asp:ListItem Text="Saturday" Value="Saturday" />
+<asp:ListItem Text="Sunday" Value="Sunday" />
+<asp:ListItem Text="Monday" Value="Monday" />
+<asp:ListItem Text="Tuesday" Value="Tuesday" />
+<asp:ListItem Text="Wednesday" Value="Wednesday" />
+<asp:ListItem Text="Thursday" Value="Thursday" />
+
                 </asp:DropDownList>
                 <asp:Label
                   ID="lblSectionTime"
@@ -219,6 +222,7 @@ Namespace="System.Web.UI" %>
                             CommandArgument='<%# Eval("TimetableID") %>'
                             OnCommand="TimetableRepeater_ItemCommand"
                             class="delete-btn"
+                            OnClientClick="return confirm('Are you sure you want to delete this timetable?');"
                           />
                         </td>
                       </tr>
@@ -266,6 +270,7 @@ Namespace="System.Web.UI" %>
                               CommandName="Delete"
                               CommandArgument='<%# Eval("SectionID") %>'
                               class="delete-btn"
+                              OnClientClick="return confirm('Are you sure you want to delete this timetable?');"
                             />
                           </td>
                         </tr>
