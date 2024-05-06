@@ -22,174 +22,152 @@ Namespace="System.Web.UI" %>
           </div>
           <div class="panel-body">
             <div class="admin-form">
-              <!-- ? Lecture Control -->
-              <div class="lecture-control-heading">
-                <h4>Add or Update Timetable Entry</h4>
-              </div>
-              <div class="lecture-control-content">
-                <asp:DropDownList
-                  ID="ddlCourse"
-                  runat="server"
-                  CssClass="form-control"
-                  AutoPostBack="true"
-                  OnSelectedIndexChanged="ddlCourse_SelectedIndexChanged"
-                ></asp:DropDownList>
-                <asp:DropDownList
-                  ID="ddlDay"
-                  runat="server"
-                  CssClass="form-control"
-                >
-                  <asp:ListItem Text="Select a Day" selected disabled />
-                  <asp:ListItem Text="Monday" Value="Monday" />
-                  <asp:ListItem Text="Tuesday" Value="Tuesday" />
-                  <asp:ListItem Text="Wednesday" Value="Wednesday" />
-                  <asp:ListItem Text="Thursday" Value="Thursday" />
-                  <asp:ListItem Text="Friday" Value="Friday" />
-                </asp:DropDownList>
-                <asp:TextBox
-                  ID="txtStartTime"
-                  runat="server"
-                  CssClass="form-control"
-                  Placeholder="Start Time (HH:mm)"
-                  type="time"
-                />
-                <asp:TextBox
-                  ID="txtEndTime"
-                  runat="server"
-                  CssClass="form-control"
-                  Placeholder="End Time (HH:mm)"
-                  type="time"
-                />
-                <asp:DropDownList
-                  ID="ddlRoom"
-                  runat="server"
-                  CssClass="form-control"
-                ></asp:DropDownList>
-                <asp:DropDownList
-                  ID="ddlProfessor"
-                  runat="server"
-                  CssClass="form-control"
-                ></asp:DropDownList>
-              </div>
-              <div class="lectures-control-footer">
-                <asp:Button
-                  ID="btnAddOrUpdate"
-                  runat="server"
-                  CssClass="btn btn-primary"
-                  Text="Save"
-                  OnClick="BtnAddOrUpdate_Click"
-                />
-                <asp:Label
-                  ID="lblMessage"
-                  runat="server"
-                  CssClass="text-success"
-                />
-              </div>
+              <h4>Add or Update Timetable Entry</h4>
+              <asp:DropDownList
+                ID="ddlCourse"
+                runat="server"
+                CssClass="form-control"
+                AutoPostBack="true"
+                OnSelectedIndexChanged="ddlCourse_SelectedIndexChanged"
+              ></asp:DropDownList>
+              <asp:DropDownList
+                ID="ddlDay"
+                runat="server"
+                CssClass="form-control"
+              >
+                <asp:ListItem Text="Monday" Value="Monday" />
+                <asp:ListItem Text="Tuesday" Value="Tuesday" />
+                <asp:ListItem Text="Wednesday" Value="Wednesday" />
+                <asp:ListItem Text="Thursday" Value="Thursday" />
+                <asp:ListItem Text="Friday" Value="Friday" />
+              </asp:DropDownList>
+              <asp:TextBox
+                ID="txtStartTime"
+                runat="server"
+                CssClass="form-control"
+                Placeholder="Start Time (HH:mm)"
+              />
+              <asp:TextBox
+                ID="txtEndTime"
+                runat="server"
+                CssClass="form-control"
+                Placeholder="End Time (HH:mm)"
+              />
+              <asp:DropDownList
+                ID="ddlRoom"
+                runat="server"
+                CssClass="form-control"
+              ></asp:DropDownList>
+              <asp:DropDownList
+                ID="ddlProfessor"
+                runat="server"
+                CssClass="form-control"
+              ></asp:DropDownList>
+              <asp:Button
+                ID="btnAddOrUpdate"
+                runat="server"
+                CssClass="btn btn-primary"
+                Text="Save"
+                OnClick="BtnAddOrUpdate_Click"
+              />
+              <asp:Label
+                ID="lblMessage"
+                runat="server"
+                CssClass="text-success"
+              />
             </div>
-            <!-- ? Section Control -->
-            <div
-              id="sectionDetails"
-              class="section-form"
-              runat="server"
-              style="display: none"
-            >
-              <hr />
-              <div class="section-control-header">
-                <h4>Add Section Details</h4>
-              </div>
-              <div class="section-control-content">
-                <asp:Label
-                  ID="lblSectionName"
-                  runat="server"
-                  Text="Section Name:"
-                  CssClass="form-label"
-                />
-                <asp:TextBox
-                  ID="txtSectionName"
-                  runat="server"
-                  CssClass="form-control"
-                  ReadOnly="true"
-                />
-                <asp:Label
-                  ID="lblSectionDay"
-                  runat="server"
-                  Text="Day:"
-                  CssClass="form-label"
-                />
-                <asp:DropDownList
-                  ID="ddlSectionDay"
-                  runat="server"
-                  CssClass="form-control"
-                >
-                  <asp:ListItem Text="Monday" Value="Monday" />
-                  <asp:ListItem Text="Tuesday" Value="Tuesday" />
-                  <asp:ListItem Text="Wednesday" Value="Wednesday" />
-                  <asp:ListItem Text="Thursday" Value="Thursday" />
-                  <asp:ListItem Text="Friday" Value="Friday" />
-                </asp:DropDownList>
-                <asp:Label
-                  ID="lblSectionTime"
-                  runat="server"
-                  Text="Start Time:"
-                  CssClass="form-label"
-                />
-                <asp:TextBox
-                  ID="txtSectionTime"
-                  runat="server"
-                  CssClass="form-control"
-                  Placeholder="HH:mm"
-                />
-                <asp:Label
-                  ID="lblSectionEndTime"
-                  runat="server"
-                  Text="End Time:"
-                  CssClass="form-label"
-                />
-                <asp:TextBox
-                  ID="txtSectionEndTime"
-                  runat="server"
-                  CssClass="form-control"
-                  Placeholder="HH:mm"
-                />
-                <asp:Label
-                  ID="lblSectionRoom"
-                  runat="server"
-                  Text="Room:"
-                  CssClass="form-label"
-                />
-                <asp:DropDownList
-                  ID="ddlSectionRoom"
-                  runat="server"
-                  CssClass="form-control"
-                ></asp:DropDownList>
-                <asp:Label
-                  ID="lblAssistantProfessor"
-                  runat="server"
-                  Text="Assistant Professor:"
-                  CssClass="form-label"
-                />
-                <asp:DropDownList
-                  ID="ddlAssistantProfessor"
-                  runat="server"
-                  CssClass="form-control"
-                ></asp:DropDownList>
-              </div>
-              <div class="section-control-footer">
-                <asp:Button
-                  ID="btnSaveSection"
-                  runat="server"
-                  CssClass="btn btn-primary"
-                  Text="Save Section"
-                  OnClick="btnSaveSection_Click"
-                />
-                <asp:Label
-                  ID="lblSectionMessage"
-                  runat="server"
-                  CssClass="text-success"
-                />
-              </div>
-              <hr />
+            <hr />
+            <div id="sectionDetails" runat="server" style="display: none">
+              <h4>Add Section Details</h4>
+              <asp:Label
+                ID="lblSectionName"
+                runat="server"
+                Text="Section Name:"
+                CssClass="form-label"
+              />
+              <asp:TextBox
+                ID="txtSectionName"
+                runat="server"
+                CssClass="form-control"
+                ReadOnly="true"
+              />
+              <asp:Label
+                ID="lblSectionDay"
+                runat="server"
+                Text="Day:"
+                CssClass="form-label"
+              />
+              <asp:DropDownList
+                ID="ddlSectionDay"
+                runat="server"
+                CssClass="form-control"
+              >
+                <asp:ListItem Text="Monday" Value="Monday" />
+                <asp:ListItem Text="Tuesday" Value="Tuesday" />
+                <asp:ListItem Text="Wednesday" Value="Wednesday" />
+                <asp:ListItem Text="Thursday" Value="Thursday" />
+                <asp:ListItem Text="Friday" Value="Friday" />
+              </asp:DropDownList>
+              <asp:Label
+                ID="lblSectionTime"
+                runat="server"
+                Text="Start Time:"
+                CssClass="form-label"
+              />
+              <asp:TextBox
+                ID="txtSectionTime"
+                runat="server"
+                CssClass="form-control"
+                Placeholder="HH:mm"
+              />
+              <asp:Label
+                ID="lblSectionEndTime"
+                runat="server"
+                Text="End Time:"
+                CssClass="form-label"
+              />
+              <asp:TextBox
+                ID="txtSectionEndTime"
+                runat="server"
+                CssClass="form-control"
+                Placeholder="HH:mm"
+              />
+              <asp:Label
+                ID="lblSectionRoom"
+                runat="server"
+                Text="Room:"
+                CssClass="form-label"
+              />
+              <asp:DropDownList
+                ID="ddlSectionRoom"
+                runat="server"
+                CssClass="form-control"
+              ></asp:DropDownList>
+              <asp:Label
+                ID="lblAssistantProfessor"
+                runat="server"
+                Text="Assistant Professor:"
+                CssClass="form-label"
+              />
+              <asp:DropDownList
+                ID="ddlAssistantProfessor"
+                runat="server"
+                CssClass="form-control"
+              ></asp:DropDownList>
+              <asp:Button
+                ID="btnSaveSection"
+                runat="server"
+                CssClass="btn btn-primary"
+                Text="Save Section"
+                OnClick="btnSaveSection_Click"
+              />
+              <asp:Label
+                ID="lblSectionMessage"
+                runat="server"
+                CssClass="text-success"
+              />
             </div>
+            <hr />
             <div id="sectionTable" runat="server" style="display: none">
               <h4>Existing Sections</h4>
               <div class="table-responsive">

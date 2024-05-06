@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.UI.WebControls;
@@ -211,23 +211,19 @@ namespace WebApplication3
       int roomID = Convert.ToInt32(ddlRoom.SelectedValue);
       int professorID = Convert.ToInt32(ddlProfessor.SelectedValue);
 
-      if (!IsTimetableConflict(courseID, day, startTime, endTime, roomID, professorID))
-      {
-        SaveTimetableEntry(courseID, day, startTime, endTime, roomID, professorID);
-        lblMessage.Text = "Timetable entry saved successfully.";
-        lblMessage.CssClass = "text-success";
-      }
-      else
-      {
-        lblMessage.Text = "There is a conflict in the timetable. Please choose a different time or room.";
-        lblMessage.CssClass = "text-danger";
-      }
+            if (!IsTimetableConflict(courseID, day, startTime, endTime, roomID, professorID))
+            {
+                SaveTimetableEntry(courseID, day, startTime, endTime, roomID, professorID);
+                lblMessage.Text = "Timetable entry saved successfully.";
+            }
+            else
+            {
+                lblMessage.Text = "There is a conflict in the timetable. Please choose a different time or room.";
+            }
 
-      }
-
-    // Reload the timetable data
-    LoadTimetableData();
-    }
+            // Reload the timetable data
+            LoadTimetableData();
+        }
 
     // Handle course dropdown change
     protected void ddlCourse_SelectedIndexChanged(object sender, EventArgs e)
