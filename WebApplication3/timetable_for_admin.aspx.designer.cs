@@ -212,23 +212,14 @@ namespace WebApplication3
     /// </remarks>
     protected global::System.Web.UI.WebControls.Button btnSaveSection;
 
-    /// <summary>
-    /// lblSectionMessage control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.Label lblSectionMessage;
-
-    /// <summary>
-    /// TimetableRepeater control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.Repeater TimetableRepeater;
+        /// <summary>
+        /// lblSectionMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSectionMessage;
 
     /// <summary>
     /// sectionTable control.
@@ -239,13 +230,22 @@ namespace WebApplication3
     /// </remarks>
     protected global::System.Web.UI.HtmlControls.HtmlGenericControl sectionTable;
 
-    /// <summary>
-    /// SectionsRepeater control.
-    /// </summary>
-    /// <remarks>
-    /// Auto-generated field.
-    /// To modify move field declaration from designer file to code-behind file.
-    /// </remarks>
-    protected global::System.Web.UI.WebControls.Repeater SectionsRepeater;
-  }
+        /// <summary>
+        /// SectionsRepeater control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater SectionsRepeater;
+
+        /// <summary>
+        /// TimetableRepeater control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater TimetableRepeater;
+    }
 }
