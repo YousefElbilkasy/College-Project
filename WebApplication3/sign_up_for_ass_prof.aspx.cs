@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data.SqlClient;
 using System.Web.UI;
 
@@ -10,10 +10,10 @@ namespace WebApplication3
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Handle form submission
+           
             if (IsPostBack)
             {
-                // Extract form data
+                
                 string firstName = Request.Form["first-name"];
                 string lastName = Request.Form["last-name"];
                 string middleName = Request.Form["middle-name"];
@@ -24,21 +24,21 @@ namespace WebApplication3
                 DateTime dateOfBirth = Convert.ToDateTime(Request.Form["date-of-birth"]);
                 string gender = Request.Form["gender"];
 
-                // Establish database connection
+                
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     try
                     {
                         conn.Open();
 
-                        // Prepare SQL INSERT query
+                        
                         string query = @"
                             INSERT INTO AssistantProfessors (FirstName, LastName, MiddleName, ContactNumber, NationalID, Email, Password, DateOfBirth, Gender)
                             VALUES (@FirstName, @LastName, @MiddleName, @ContactNumber, @NationalID, @Email, @Password, @DateOfBirth, @Gender)";
 
                         using (SqlCommand cmd = new SqlCommand(query, conn))
                         {
-                            // Add parameters to avoid SQL injection
+                           
                             cmd.Parameters.AddWithValue("@FirstName", firstName);
                             cmd.Parameters.AddWithValue("@LastName", lastName);
                             cmd.Parameters.AddWithValue("@MiddleName", middleName);
@@ -49,17 +49,17 @@ namespace WebApplication3
                             cmd.Parameters.AddWithValue("@DateOfBirth", dateOfBirth);
                             cmd.Parameters.AddWithValue("@Gender", gender);
 
-                            // Execute the query
+                            
                             cmd.ExecuteNonQuery();
                         }
 
-                        // Register the JavaScript alert and redirect script
+                        
                         string script = "alert('Sign-up successful! Redirecting to login page...'); window.location.href='log_in.aspx';";
                         ClientScript.RegisterStartupScript(this.GetType(), "successAlert", script, true);
                     }
                     catch (Exception ex)
                     {
-                        // Handle any errors that may occur
+                        
                         Console.WriteLine(ex.Message);
                     }
                 }

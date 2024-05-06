@@ -16,20 +16,20 @@ namespace WebApplication3
                 string email = Request.Form["email"];
                 string password = Request.Form["password"];
 
-                // Check admin credentials
-                if (email == "admin@example.com" && password == "admin123")
+                
+                if (email == "admin@gmail.com" && password == "admin123")
                 {
                     // Set session variables for admin
                     Session["IsAdmin"] = true;
                     Session["Email"] = email;
                     Session["IsAuthenticated"] = true;
 
-          // Redirect to admin dashboard
+          
           Response.Redirect("verification_for_admin.aspx");
                 }
                 else
                 {
-                    // Check user credentials and determine the role
+                    
                     string role = CheckUserLogin(email, password);
 
                     if (!string.IsNullOrEmpty(role))
@@ -55,7 +55,7 @@ namespace WebApplication3
                     }
                     else
                     {
-                        // Display login error
+                       
                         DisplayLoginError("Invalid email or password. Please try again.");
                     }
                 }
@@ -72,19 +72,18 @@ namespace WebApplication3
                 {
                     conn.Open();
 
-                    // Check Students table
                     if (CheckLoginInTable(conn,"Student", email, password, out int studentId))
                     {
                         role = "student";
                         Session["ID"] = studentId; // Set session ID for student
                     }
-                    // Check Professors table
+                 
                     else if (CheckLoginInTable(conn,"Professor", email, password, out int professorId))
                     {
                         role = "professor";
                         Session["ID"] = professorId; // Set session ID for professor
                     }
-                    // Check AssistantProfessors table
+                   
                     else if (CheckLoginInTable(conn,"AssistantProfessor", email, password, out int assistantId))
                     {
                         role = "assistant";
@@ -107,18 +106,17 @@ namespace WebApplication3
             bool isAuthenticated = false;
             id = -1;
 
-            // Prepare SQL query with an additional condition for IsVerified
+            
             string query = $@"
                 SELECT {tableName}ID FROM {tableName}s
                 WHERE Email = @Email AND Password = @Password AND IsVerified = 1";
 
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                // Add parameters to avoid SQL injection
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@Password", password);
 
-                // Execute the query and check if any match is found
+             
                 object result = cmd.ExecuteScalar();
                 if (result != null)
                 {
