@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -194,5 +194,14 @@ namespace WebApplication3
 
             return assignedCourses;
         }
+    protected void LogoutButton_Click(object sender, EventArgs e)
+    {
+      // Clear session state
+      Session.Clear();
+
+      // Redirect to the login page or any other appropriate page
+      Response.Redirect("Login.aspx");
     }
+
+  }
 }

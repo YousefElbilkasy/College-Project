@@ -87,11 +87,12 @@
           </a>
         </div>
         <div class="log-out-container">
-          <a href="log_in.aspx">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            <p>log out</p>
-          </a>
+          <a href="#" onclick="LogoutButton_Click">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <p>Log out</p>
+         </a>
         </div>
+
       </div>
     </div>
 

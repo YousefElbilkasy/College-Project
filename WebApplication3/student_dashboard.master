@@ -52,12 +52,14 @@
             <p>Settings</p>
           </a>
         </div>
-        <div class="log-out-container">
-          <a href="log_in.aspx">
+       <div class="log-out-container">
+        <a href="#" onclick="LogoutButton_Click()">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            <p>log out</p>
-          </a>
-        </div>
+            <p>Log out</p>
+        </a>
+       </div>
+
+
       </div>
     </div>
 
