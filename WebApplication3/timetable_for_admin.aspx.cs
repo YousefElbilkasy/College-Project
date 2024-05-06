@@ -11,13 +11,16 @@ namespace WebApplication3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-      if (!IsPostBack)
+      if (Session["IsAuthenticated"] != null && (bool)Session["IsAuthenticated"])
       {
-        LoadCourses();
-        LoadRooms();
-        LoadProfessors();
-        LoadAssistantProfessors();
-        LoadTimetableData();
+        if (!IsPostBack)
+        {
+          LoadCourses();
+          LoadRooms();
+          LoadProfessors();
+          LoadAssistantProfessors();
+          LoadTimetableData();
+        }
       }
     }
 

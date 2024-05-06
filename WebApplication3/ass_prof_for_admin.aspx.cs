@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -11,18 +11,22 @@ namespace WebApplication3
 {
     public partial class ass_prof_for_admin : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                // Fetch data from a database
-                List<AssistantProfessors> assistantprofessors = FetchAssistantProfessorsFromDatabase();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+      if (Session["IsAuthenticated"] != null && (bool)Session["IsAuthenticated"])
+      {
 
-                // Bind the list of students to the Repeater
-                Repeater1.DataSource = assistantprofessors;
-                Repeater1.DataBind();
-            }
+        if (!IsPostBack)
+        {
+          // Fetch data from a database
+          List<AssistantProfessors> assistantprofessors = FetchAssistantProfessorsFromDatabase();
+
+          // Bind the list of students to the Repeater
+          Repeater1.DataSource = assistantprofessors;
+          Repeater1.DataBind();
         }
+      }
+    }
         private List<AssistantProfessors> FetchAssistantProfessorsFromDatabase()
         {
             List<AssistantProfessors> assistantprofessors = new List<AssistantProfessors>();

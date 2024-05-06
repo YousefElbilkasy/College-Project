@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.UI;
@@ -13,10 +13,13 @@ namespace WebApplication3
 
     protected void Page_Load(object sender, EventArgs e)
     {
-      if (!IsPostBack)
+      if (Session["IsAuthenticated"] != null && (bool)Session["IsAuthenticated"])
       {
-        // Load and bind current courses when the page loads for the first time
-        BindCurrentCourses();
+        if (!IsPostBack)
+        {
+          // Load and bind current courses when the page loads for the first time
+          BindCurrentCourses();
+        }
       }
     }
 

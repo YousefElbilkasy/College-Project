@@ -9,14 +9,17 @@ namespace WebApplication3
         // Connection string to the database
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
-        protected void Page_Load(object sender, EventArgs e)
+    protected void Page_Load(object sender, EventArgs e)
+    {
+      if (Session["IsAuthenticated"] != null && (bool)Session["IsAuthenticated"])
+      {
+        if (!IsPostBack)
         {
-            if (!IsPostBack)
-            {
-                // Load unverified users data when the page is first loaded
-                LoadUnverifiedUsers();
-            }
+          // Load unverified users data when the page is first loaded
+          LoadUnverifiedUsers();
         }
+      }
+    }
 
         // Function to load unverified users
         private void LoadUnverifiedUsers()

@@ -13,17 +13,20 @@ namespace WebApplication3
   {
     protected void Page_Load(object sender, EventArgs e)
     {
-      if (!IsPostBack)
+      if (Session["IsAuthenticated"] != null && (bool)Session["IsAuthenticated"])
       {
-        // Fetch and bind all students to the GridView
-        BindStudentsToRepeater(null, null);
-      }
-      else if (Request.Params["__EVENTTARGET"] == "searchButton")
-      {
-        // Handle the search functionality
-        string searchField = Request.Params["searchField"];
-        string searchTerm = Request.Params["__EVENTARGUMENT"];
-        BindStudentsToRepeater(searchField, searchTerm);
+        if (!IsPostBack)
+        {
+          // Fetch and bind all students to the GridView
+          BindStudentsToRepeater(null, null);
+        }
+        else if (Request.Params["__EVENTTARGET"] == "searchButton")
+        {
+          // Handle the search functionality
+          string searchField = Request.Params["searchField"];
+          string searchTerm = Request.Params["__EVENTARGUMENT"];
+          BindStudentsToRepeater(searchField, searchTerm);
+        }
       }
     }
 
