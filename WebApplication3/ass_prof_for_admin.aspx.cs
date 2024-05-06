@@ -26,6 +26,11 @@ namespace WebApplication3
           Repeater1.DataBind();
         }
       }
+      else
+      {
+        // Redirect to the login page if the user is not authenticated
+        Response.Redirect("log_in.aspx");
+      }
     }
         private List<AssistantProfessors> FetchAssistantProfessorsFromDatabase()
         {

@@ -22,6 +22,11 @@ namespace WebApplication3
           LoadTimetableData();
         }
       }
+      else
+      {
+        // Redirect to the login page if the user is not authenticated
+        Response.Redirect("log_in.aspx");
+      }
     }
 
     // Load courses into ddlCourse

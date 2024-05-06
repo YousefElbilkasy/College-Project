@@ -21,6 +21,11 @@ namespace WebApplication3
           BindCurrentCourses();
         }
       }
+      else
+      {
+        // Redirect to the login page if the user is not authenticated
+        Response.Redirect("log_in.aspx");
+      }
     }
 
     protected void BtnAddCourse_Click(object sender, EventArgs e)

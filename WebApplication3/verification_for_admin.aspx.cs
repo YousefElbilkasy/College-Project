@@ -19,6 +19,11 @@ namespace WebApplication3
           LoadUnverifiedUsers();
         }
       }
+      else
+      {
+        // Redirect to the login page if the user is not authenticated
+        Response.Redirect("log_in.aspx");
+      }
     }
 
         // Function to load unverified users
@@ -182,6 +187,15 @@ namespace WebApplication3
             string script = $"alert('{errorMessage}');";
             ClientScript.RegisterStartupScript(this.GetType(), "errorAlert", script, true);
         }
+    protected void LogoutButton_Click(object sender, EventArgs e)
+    {
+      // Clear session state
+      Session.Clear();
+      Session.Abandon();
 
+      // Redirect to the login page
+      Response.Redirect("log_in.aspx");
     }
+
+  }
 }

@@ -28,6 +28,11 @@ namespace WebApplication3
           BindStudentsToRepeater(searchField, searchTerm);
         }
       }
+      else
+      {
+        // Redirect to the login page if the user is not authenticated
+        Response.Redirect("log_in.aspx");
+      }
     }
 
     private void BindStudentsToRepeater(string searchField, string searchTerm)
