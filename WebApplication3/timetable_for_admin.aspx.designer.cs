@@ -222,6 +222,15 @@ namespace WebApplication3
         protected global::System.Web.UI.WebControls.Label lblSectionMessage;
 
         /// <summary>
+        /// TimetableRepeater control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater TimetableRepeater;
+
+        /// <summary>
         /// sectionTable control.
         /// </summary>
         /// <remarks>
@@ -238,14 +247,5 @@ namespace WebApplication3
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater SectionsRepeater;
-
-        /// <summary>
-        /// TimetableRepeater control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater TimetableRepeater;
     }
 }

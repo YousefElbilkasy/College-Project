@@ -39,12 +39,13 @@ Namespace="System.Web.UI" %>
                   runat="server"
                   CssClass="form-control"
                 >
-                  <asp:ListItem Text="Select a Day" selected disabled />
-                  <asp:ListItem Text="Monday" Value="Monday" />
-                  <asp:ListItem Text="Tuesday" Value="Tuesday" />
-                  <asp:ListItem Text="Wednesday" Value="Wednesday" />
-                  <asp:ListItem Text="Thursday" Value="Thursday" />
-                  <asp:ListItem Text="Friday" Value="Friday" />
+                                    <asp:ListItem Text="Select a Day" selected disabled />
+<asp:ListItem Text="Saturday" Value="Saturday" />
+<asp:ListItem Text="Sunday" Value="Sunday" />
+<asp:ListItem Text="Monday" Value="Monday" />
+<asp:ListItem Text="Tuesday" Value="Tuesday" />
+<asp:ListItem Text="Wednesday" Value="Wednesday" />
+<asp:ListItem Text="Thursday" Value="Thursday" />
                 </asp:DropDownList>
                 <asp:TextBox
                   ID="txtStartTime"
@@ -114,11 +115,13 @@ Namespace="System.Web.UI" %>
                   CssClass="form-control"
                 >
                   <asp:ListItem Text="Select a Day" selected disabled />
-                  <asp:ListItem Text="Monday" Value="Monday" />
-                  <asp:ListItem Text="Tuesday" Value="Tuesday" />
-                  <asp:ListItem Text="Wednesday" Value="Wednesday" />
-                  <asp:ListItem Text="Thursday" Value="Thursday" />
-                  <asp:ListItem Text="Friday" Value="Friday" />
+<asp:ListItem Text="Saturday" Value="Saturday" />
+<asp:ListItem Text="Sunday" Value="Sunday" />
+<asp:ListItem Text="Monday" Value="Monday" />
+<asp:ListItem Text="Tuesday" Value="Tuesday" />
+<asp:ListItem Text="Wednesday" Value="Wednesday" />
+<asp:ListItem Text="Thursday" Value="Thursday" />
+
                 </asp:DropDownList>
                 <asp:Label
                   ID="lblSectionTime"
