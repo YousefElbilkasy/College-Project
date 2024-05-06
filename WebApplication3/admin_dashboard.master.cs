@@ -13,5 +13,14 @@ namespace WebApplication3
     {
 
     }
+    protected void LogoutButton_Click(object sender, EventArgs e)
+    {
+      // Clear session state
+      Session.Clear();
+
+      // Redirect to the login page or any other appropriate page
+      Response.Redirect("Login.aspx");
+    }
+
   }
 }

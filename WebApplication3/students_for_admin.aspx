@@ -5,11 +5,7 @@ Inherits="WebApplication3.students_for_admin" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="PrivateStyle2" runat="server">
   <link href="css/students_for_admin.css" rel="stylesheet" />
 </asp:Content>
-<asp:Content
-  ID="Content2"
-  ContentPlaceHolderID="ContentForAdminDashboard"
-  runat="server"
->
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentForAdminDashboard" runat="server">
   <div class="search-container">
     <div class="search-field">
       <select id="searchField" name="searchField" class="form-control">
@@ -37,8 +33,7 @@ Inherits="WebApplication3.students_for_admin" %>
         <div class="student-card-header">
           <p class="student-card-id"><%# Eval("StudentID") %> :</p>
           <h2 class="student-card-headline">
-            <%# Eval("FirstName") %> <%# Eval("MiddleName") %> <%#
-            Eval("LastName") %>
+            <%# Eval("FirstName") %> <%# Eval("MiddleName") %> <%# Eval("LastName") %>
           </h2>
         </div>
         <div class="student-card-body">
@@ -54,40 +49,23 @@ Inherits="WebApplication3.students_for_admin" %>
               Contact Number: <%# Eval("ContactNumber") %>
             </p>
             <p class="student-card-info">
-              Date of Birth: <%#
-              ((DateTime)Eval("DateOfBirth")).ToString("dd-MM-yyyy") %>
+              Date of Birth: <%# ((DateTime)Eval("DateOfBirth")).ToString("dd-MM-yyyy") %>
             </p>
             <p class="student-card-info">Gender: <%# Eval("Gender") %></p>
-          </div>
-          <div class="div-student-card-actions">
-            <i class="fas fa-edit" onclick="openEditModal()"></i>
-            <i class="fas fa-trash"></i>
+            <asp:Button
+              ID="DeleteBtn"
+              runat="server"
+              Text="Delete"
+              CommandArgument='<%# Eval("StudentID") %>'
+              OnClick="confirmDeleteBtn_Click"
+              CssClass="delete-btn"
+            />
           </div>
         </div>
       </div>
-         <!-- Modal for delete student -->
- <div id="deleteConfirmationModal" class="overlay">
-   <div class="modal modal-delete">
-     <span class="close">&times;</span>
-     <div class="modal-content-center">
-       <div class="modal-header">
-         <i class="fa-solid fa-triangle-exclamation"></i>
-         <h2>Confirm Delete</h2>
-       </div>
-       <div class="modal-content delete-content">
-         <p>Are you sure you want to delete this student?</p>
-       </div>
-       <div class="modal-footer modal-delete-footer">
-           <asp:Button ID="confirmDeleteBtn" runat="server" Text="Confirm" 
-           CssClass="add-student-btn confirm-delete" 
-           OnClick="confirmDeleteBtn_Click" CommandArgument='<%# Eval("StudentID") %>'/>
-         <button id="cancelDeleteBtn" class="add-student-btn">Cancel</button>
-       </div>
-     </div>
-   </div>
- </div>
     </ItemTemplate>
   </asp:Repeater>
+
   <!-- Modal for Add student -->
   <div id="addStudentModal" class="overlay">
     <div class="modal">

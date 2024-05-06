@@ -169,55 +169,65 @@ namespace WebApplication3
 
       string connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
-      using (SqlConnection connection = new SqlConnection(connectionString))
+      try
       {
-        connection.Open();
-
-        // Delete related records in StudentAttendance table
-        string deleteAttendanceQuery = "DELETE FROM StudentAttendance WHERE StudentID = @StudentID";
-        using (SqlCommand attendanceCommand = new SqlCommand(deleteAttendanceQuery, connection))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
-          attendanceCommand.Parameters.AddWithValue("@StudentID", studentId);
-          attendanceCommand.ExecuteNonQuery();
-        }
-        // Delete related records in StudentCoursese table
-        string deleteStudentCourseseQuery = "DELETE FROM StudentsCourses WHERE StudentID = @StudentID";
-        using (SqlCommand attendanceCommand = new SqlCommand(deleteStudentCourseseQuery, connection))
-        {
-          attendanceCommand.Parameters.AddWithValue("@StudentID", studentId);
-          attendanceCommand.ExecuteNonQuery();
-        }
+          connection.Open();
 
-        // Delete the student
-        string deleteQuery = "DELETE FROM Students WHERE StudentID = @StudentID";
-        using (SqlCommand command = new SqlCommand(deleteQuery, connection))
-        {
-          command.Parameters.AddWithValue("@StudentID", studentId);
-          int rowsAffected = command.ExecuteNonQuery();
-
-          if (rowsAffected > 0)
+          // Delete related records in StudentAttendance table
+          string deleteAttendanceQuery = "DELETE FROM StudentAttendance WHERE StudentID = @StudentID";
+          using (SqlCommand attendanceCommand = new SqlCommand(deleteAttendanceQuery, connection))
           {
-            ShowMessage("Success");
-            Response.Redirect(Request.Url.ToString());
+            attendanceCommand.Parameters.AddWithValue("@StudentID", studentId);
+            attendanceCommand.ExecuteNonQuery();
           }
-          else
+
+          // Delete related records in StudentsCourses table
+          string deleteStudentCoursesQuery = "DELETE FROM StudentsCourses WHERE StudentID = @StudentID";
+          using (SqlCommand coursesCommand = new SqlCommand(deleteStudentCoursesQuery, connection))
           {
-            ShowError("Failed");
+            coursesCommand.Parameters.AddWithValue("@StudentID", studentId);
+            coursesCommand.ExecuteNonQuery();
           }
-        }
 
-        void ShowMessage(string txt)
-        {
-          // Display success message to the user
-          ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('" + txt + "');", true);
-        }
+          // Delete the student
+          string deleteQuery = "DELETE FROM Students WHERE StudentID = @StudentID";
+          using (SqlCommand command = new SqlCommand(deleteQuery, connection))
+          {
+            command.Parameters.AddWithValue("@StudentID", studentId);
+            int rowsAffected = command.ExecuteNonQuery();
 
-        void ShowError(string txt)
-        {
-          // Display error message to the user
-          ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('" + txt + "');", true);
+            if (rowsAffected > 0)
+            {
+              ShowMessage("Success");
+            }
+            else
+            {
+              ShowError("Failed");
+            }
+          }
         }
       }
+      catch (Exception ex)
+      {
+        ShowError("An error occurred: " + ex.Message);
+      }
+
+      // Redirect to the same page
+      Response.Redirect(Request.Url.ToString());
+    }
+
+    private void ShowMessage(string message)
+    {
+      // Display success message to the user
+      ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('" + message + "');", true);
+    }
+
+    private void ShowError(string errorMessage)
+    {
+      // Display error message to the user
+      ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('" + errorMessage + "');", true);
     }
 
     protected void LogoutButton_Click(object sender, EventArgs e)
