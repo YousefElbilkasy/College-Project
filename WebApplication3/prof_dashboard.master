@@ -15,20 +15,20 @@
   <div class="first-column-container">
     <div class="info-container">
       <div class="courses">
-        <a href="courses_for_student" class="courses-link">
+        <a href="courses_for_prof.aspx" class="courses-link">
           <i class="fa-solid fa-book"></i>
           <p>material</p>
         </a>
       </div>
       <div class="timetable">
-        <a href="{{ url_for('timetable_for_student') }}" class="timetable-link">
+        <a href="timetable_for_prof.aspx" class="timetable-link">
           <i class="fa-regular fa-calendar-days"></i>
           <p>time table</p>
         </a>
       </div>
       <div class="assignment-menu">
         <a
-          href="{{ url_for('assignment_for_student') }}"
+          href="assignment_for_prof.aspx"
           class="assignment-link"
         >
           <i class="fa-solid fa-list-check"></i>
@@ -37,7 +37,7 @@
       </div>
       <div class="attendance">
         <a
-          href="{{ url_for('attendance_for_student') }}"
+          href="attendance_for_prof.aspx"
           class="attendance-link"
         >
           <i class="fa-solid fa-circle-check"></i>
@@ -54,7 +54,7 @@
         </a>
       </div>
       <div class="log-out-container">
-        <a href="{{ url_for('log_in') }}">
+        <a href="log_in.aspx">
           <i class="fa-solid fa-arrow-right-from-bracket"></i>
           <p>log out</p>
         </a>
@@ -64,15 +64,12 @@
 
   <div class="dashboard-content">
     <div class="header-container">
-      <input type="text" placeholder="🔍 Search..." class="search-input" />
-
       <div class="header-end-container">
         <i class="fa-solid fa-bell"></i>
         <div class="profile-container">
           <i class="fa-solid fa-user"></i>
           <div class="account-details">
             <h6>
-              {{'Dr. ' + professor.first_name +" " +professor.last_name }}
             </h6>
             <p>Professor</p>
           </div>
@@ -82,8 +79,7 @@
 
     <div class="container">
       <div class="assignment">
-        {% block content_of_prof_dashboard %} {% endblock
-        content_of_prof_dashboard %}
+        <asp:ContentPlaceHolder ID="ContentOfProfDashboard" runat="server"></asp:ContentPlaceHolder>
       </div>
     </div>
   </div>
