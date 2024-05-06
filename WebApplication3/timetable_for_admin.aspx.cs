@@ -29,7 +29,7 @@ namespace WebApplication3
       }
     }
 
-    // Load courses into ddlCourse
+    
     private void LoadCourses()
     {
       using (SqlConnection conn = new SqlConnection(connectionString))
@@ -50,7 +50,6 @@ namespace WebApplication3
       ddlCourse.Items.Insert(0, new ListItem("Select a Course", "0"));
     }
 
-    // Load rooms into ddlRoom and ddlSectionRoom
     private void LoadRooms()
     {
       using (SqlConnection conn = new SqlConnection(connectionString))
@@ -66,8 +65,10 @@ namespace WebApplication3
             ddlRoom.DataValueField = "RoomID";
             ddlRoom.DataBind();
 
-            // Also bind ddlSectionRoom
+            
             reader.Close();
+
+            //Section
             using (SqlDataReader reader2 = cmd.ExecuteReader())
             {
               ddlSectionRoom.DataSource = reader2;
@@ -82,7 +83,6 @@ namespace WebApplication3
       ddlSectionRoom.Items.Insert(0, new ListItem("Select a Room", "0"));
     }
 
-    // Load professors into ddlProfessor
     private void LoadProfessors()
     {
       using (SqlConnection conn = new SqlConnection(connectionString))
@@ -124,7 +124,7 @@ namespace WebApplication3
       ddlAssistantProfessor.Items.Insert(0, new ListItem("Select an Assistant Professor", "0"));
     }
 
-    // Load timetable data into TimetableRepeater
+  
     private void LoadTimetableData()
     {
       using (SqlConnection conn = new SqlConnection(connectionString))
@@ -147,16 +147,16 @@ namespace WebApplication3
       }
     }
 
-    // Load sections data into SectionsRepeater
+    
     private void LoadSectionsData()
     {
-      // Get the course ID from the dropdown
+      
       int courseID = Convert.ToInt32(ddlCourse.SelectedValue);
 
-      // Check if the course has sections enabled
+      //Checking
       if (HasSections(courseID))
       {
-        // Load sections data if the course has sections enabled
+       
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
           conn.Open();
@@ -177,19 +177,19 @@ namespace WebApplication3
           }
         }
 
-        // Show sections table and section details
+        
         sectionTable.Style["display"] = "block";
         sectionDetails.Style["display"] = "block";
       }
       else
       {
-        // Hide sections table and section details if the course does not have sections
+        //If course not has a sction , sections section not be display 
         sectionTable.Style["display"] = "none";
         sectionDetails.Style["display"] = "none";
       }
     }
 
-    // Helper method to check if a course has sections enabled
+    
     private bool HasSections(int courseID)
     {
       using (SqlConnection conn = new SqlConnection(connectionString))
@@ -209,9 +209,10 @@ namespace WebApplication3
       return false;
     }
 
-    // Handle adding or updating timetable entries
+    
     protected void BtnAddOrUpdate_Click(object sender, EventArgs e)
     {
+      //Retrive Data
       int courseID = Convert.ToInt32(ddlCourse.SelectedValue);
       string day = ddlDay.SelectedValue;
       TimeSpan startTime = TimeSpan.Parse(txtStartTime.Text);
@@ -231,43 +232,121 @@ namespace WebApplication3
         lblMessage.CssClass = "text-danger";
       }
 
-      // Reload the timetable data
+     
       LoadTimetableData();
     }
+    // Save timetable entry
+    private void SaveTimetableEntry(int courseID, string day, TimeSpan startTime, TimeSpan endTime, int roomID, int professorID)
+    {
+      using (SqlConnection conn = new SqlConnection(connectionString))
+      {
+        conn.Open();
 
-    // Handle course dropdown change
+        string query;
+        if (IsTimetableEntryExists(courseID, day, startTime, endTime, roomID, professorID))
+        {
+          
+          query = @"
+                        UPDATE Timetable
+                        SET Day = @Day, StartTime = @StartTime, EndTime = @EndTime, RoomID = @RoomID, ProfessorID = @ProfessorID
+                        WHERE CourseID = @CourseID AND TimetableID = @TimetableID";
+
+          using (SqlCommand cmd = new SqlCommand(query, conn))
+          {
+            int timetableID = GetTimetableID(courseID, day, startTime, endTime, roomID, professorID);
+            cmd.Parameters.AddWithValue("@TimetableID", timetableID);
+            cmd.Parameters.AddWithValue("@Day", day);
+            cmd.Parameters.AddWithValue("@StartTime", startTime);
+            cmd.Parameters.AddWithValue("@EndTime", endTime);
+            cmd.Parameters.AddWithValue("@RoomID", roomID);
+            cmd.Parameters.AddWithValue("@ProfessorID", professorID);
+
+            cmd.ExecuteNonQuery();
+          }
+        }
+        else
+        {
+          
+          query = @"
+                        INSERT INTO Timetable (CourseID, Day, StartTime, EndTime, RoomID, ProfessorID)
+                        VALUES (@CourseID, @Day, @StartTime, @EndTime, @RoomID, @ProfessorID)";
+
+          using (SqlCommand cmd = new SqlCommand(query, conn))
+          {
+            cmd.Parameters.AddWithValue("@CourseID", courseID);
+            cmd.Parameters.AddWithValue("@Day", day);
+            cmd.Parameters.AddWithValue("@StartTime", startTime);
+            cmd.Parameters.AddWithValue("@EndTime", endTime);
+            cmd.Parameters.AddWithValue("@RoomID", roomID);
+            cmd.Parameters.AddWithValue("@ProfessorID", professorID);
+
+            cmd.ExecuteNonQuery();
+          }
+        }
+      }
+    }
+
+    
+    private bool IsTimetableEntryExists(int courseID, string day, TimeSpan startTime, TimeSpan endTime, int roomID, int professorID)
+    {
+      using (SqlConnection conn = new SqlConnection(connectionString))
+      {
+        conn.Open();
+        string query = @"
+                    SELECT COUNT(*)
+                    FROM Timetable
+                    WHERE CourseID = @CourseID
+                    AND Day = @Day
+                    AND StartTime = @StartTime
+                    AND EndTime = @EndTime
+                    AND RoomID = @RoomID
+                    AND ProfessorID = @ProfessorID";
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+        {
+          cmd.Parameters.AddWithValue("@CourseID", courseID);
+          cmd.Parameters.AddWithValue("@Day", day);
+          cmd.Parameters.AddWithValue("@StartTime", startTime);
+          cmd.Parameters.AddWithValue("@EndTime", endTime);
+          cmd.Parameters.AddWithValue("@RoomID", roomID);
+          cmd.Parameters.AddWithValue("@ProfessorID", professorID);
+
+          int count = (int)cmd.ExecuteScalar();
+          return count > 0;
+        }
+      }
+    }
+
     protected void ddlCourse_SelectedIndexChanged(object sender, EventArgs e)
     {
       int courseID = Convert.ToInt32(ddlCourse.SelectedValue);
       if (courseID > 0)
       {
-        // Check if the selected course has sections enabled
+        
         if (HasSections(courseID))
         {
-          // Load and display sections for the selected course
+          
           LoadSectionsData();
-          // Display section details
+          
           sectionDetails.Style["display"] = "block";
           txtSectionName.Text = ddlCourse.SelectedItem.Text + " Section";
-          // Show sections table
+         
           sectionTable.Style["display"] = "block";
         }
         else
         {
-          // Hide section details and sections table if the course has no sections
+          
           sectionDetails.Style["display"] = "none";
           sectionTable.Style["display"] = "none";
         }
       }
       else
       {
-        // Hide section details and sections table if no valid course is selected
+        
         sectionDetails.Style["display"] = "none";
         sectionTable.Style["display"] = "none";
       }
     }
 
-    // Handle adding or updating sections
     protected void btnSaveSection_Click(object sender, EventArgs e)
     {
       if (!int.TryParse(ddlCourse.SelectedValue, out int courseID) || courseID == 0)
@@ -311,7 +390,7 @@ namespace WebApplication3
 
       SaveSection(courseID, sectionName, sectionDay, sectionTime, sectionEndTime, roomID, assistantProfessorID);
 
-      LoadSectionsData(); // Refresh sections list
+      LoadSectionsData(); 
     }
 
     // Save section entry
@@ -410,12 +489,12 @@ namespace WebApplication3
       lblSectionMessage.Text = "Section deleted successfully.";
     }
 
-    // Format time value for display
+ 
     protected string FormatTime(object timeValue)
     {
       if (timeValue == null || timeValue == DBNull.Value)
       {
-        return "N/A"; // Default value if data is null or empty
+        return "N/A"; 
       }
 
       try
@@ -429,7 +508,7 @@ namespace WebApplication3
       }
     }
 
-    // Check for timetable conflicts
+   
     private bool IsTimetableConflict(int courseID, string day, TimeSpan startTime, TimeSpan endTime, int roomID, int professorID)
     {
       using (SqlConnection conn = new SqlConnection(connectionString))
@@ -459,88 +538,9 @@ namespace WebApplication3
       }
     }
 
-    // Save timetable entry
-    private void SaveTimetableEntry(int courseID, string day, TimeSpan startTime, TimeSpan endTime, int roomID, int professorID)
-    {
-      using (SqlConnection conn = new SqlConnection(connectionString))
-      {
-        conn.Open();
 
-        string query;
-        if (IsTimetableEntryExists(courseID, day, startTime, endTime, roomID, professorID))
-        {
-          // Update timetable entry
-          query = @"
-                        UPDATE Timetable
-                        SET Day = @Day, StartTime = @StartTime, EndTime = @EndTime, RoomID = @RoomID, ProfessorID = @ProfessorID
-                        WHERE CourseID = @CourseID AND TimetableID = @TimetableID";
 
-          using (SqlCommand cmd = new SqlCommand(query, conn))
-          {
-            int timetableID = GetTimetableID(courseID, day, startTime, endTime, roomID, professorID);
-            cmd.Parameters.AddWithValue("@TimetableID", timetableID);
-            cmd.Parameters.AddWithValue("@Day", day);
-            cmd.Parameters.AddWithValue("@StartTime", startTime);
-            cmd.Parameters.AddWithValue("@EndTime", endTime);
-            cmd.Parameters.AddWithValue("@RoomID", roomID);
-            cmd.Parameters.AddWithValue("@ProfessorID", professorID);
-
-            cmd.ExecuteNonQuery();
-          }
-        }
-        else
-        {
-          // Insert new timetable entry
-          query = @"
-                        INSERT INTO Timetable (CourseID, Day, StartTime, EndTime, RoomID, ProfessorID)
-                        VALUES (@CourseID, @Day, @StartTime, @EndTime, @RoomID, @ProfessorID)";
-
-          using (SqlCommand cmd = new SqlCommand(query, conn))
-          {
-            cmd.Parameters.AddWithValue("@CourseID", courseID);
-            cmd.Parameters.AddWithValue("@Day", day);
-            cmd.Parameters.AddWithValue("@StartTime", startTime);
-            cmd.Parameters.AddWithValue("@EndTime", endTime);
-            cmd.Parameters.AddWithValue("@RoomID", roomID);
-            cmd.Parameters.AddWithValue("@ProfessorID", professorID);
-
-            cmd.ExecuteNonQuery();
-          }
-        }
-      }
-    }
-
-    // Check if a timetable entry exists
-    private bool IsTimetableEntryExists(int courseID, string day, TimeSpan startTime, TimeSpan endTime, int roomID, int professorID)
-    {
-      using (SqlConnection conn = new SqlConnection(connectionString))
-      {
-        conn.Open();
-        string query = @"
-                    SELECT COUNT(*)
-                    FROM Timetable
-                    WHERE CourseID = @CourseID
-                    AND Day = @Day
-                    AND StartTime = @StartTime
-                    AND EndTime = @EndTime
-                    AND RoomID = @RoomID
-                    AND ProfessorID = @ProfessorID";
-        using (SqlCommand cmd = new SqlCommand(query, conn))
-        {
-          cmd.Parameters.AddWithValue("@CourseID", courseID);
-          cmd.Parameters.AddWithValue("@Day", day);
-          cmd.Parameters.AddWithValue("@StartTime", startTime);
-          cmd.Parameters.AddWithValue("@EndTime", endTime);
-          cmd.Parameters.AddWithValue("@RoomID", roomID);
-          cmd.Parameters.AddWithValue("@ProfessorID", professorID);
-
-          int count = (int)cmd.ExecuteScalar();
-          return count > 0;
-        }
-      }
-    }
-
-    // Get timetable ID for an existing timetable entry
+ 
     private int GetTimetableID(int courseID, string day, TimeSpan startTime, TimeSpan endTime, int roomID, int professorID)
     {
       using (SqlConnection conn = new SqlConnection(connectionString))
@@ -579,18 +579,16 @@ namespace WebApplication3
       }
     }
 
-    // Handle deleting a timetable entry
     protected void TimetableRepeater_ItemCommand(object sender, CommandEventArgs e)
     {
       if (e.CommandName == "Delete")
       {
         int timetableID = Convert.ToInt32(e.CommandArgument);
         DeleteTimetableEntry(timetableID);
-        LoadTimetableData(); // Reload the timetable data after deletion
+        LoadTimetableData(); 
       }
     }
 
-    // Delete a timetable entry
     private void DeleteTimetableEntry(int timetableID)
     {
       using (SqlConnection conn = new SqlConnection(connectionString))
