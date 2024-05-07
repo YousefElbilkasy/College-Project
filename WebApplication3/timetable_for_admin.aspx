@@ -1,8 +1,10 @@
 <%@ Page Title="Timetable Management" Language="C#"
-MasterPageFile="~/admin_dashboard.master" AutoEventWireup="true"
-CodeBehind="timetable_for_admin.aspx.cs"
-Inherits="WebApplication3.timetable_for_admin" %> <%@ Import
-Namespace="System.Web.UI" %>
+  MasterPageFile="~/admin_dashboard.master" AutoEventWireup="true"
+  CodeBehind="timetable_for_admin.aspx.cs"
+  Inherits="WebApplication3.timetable_for_admin" %>
+
+<%@ Import
+  Namespace="System.Web.UI" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="PrivateStyle2" runat="server">
   <link href="css/timetable_for_admin.css" rel="stylesheet" />
@@ -11,8 +13,7 @@ Namespace="System.Web.UI" %>
 <asp:Content
   ID="Content2"
   ContentPlaceHolderID="ContentForAdminDashboard"
-  runat="server"
->
+  runat="server">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -32,45 +33,39 @@ Namespace="System.Web.UI" %>
                   runat="server"
                   CssClass="form-control"
                   AutoPostBack="true"
-                  OnSelectedIndexChanged="ddlCourse_SelectedIndexChanged"
-                ></asp:DropDownList>
+                  OnSelectedIndexChanged="ddlCourse_SelectedIndexChanged">
+                </asp:DropDownList>
                 <asp:DropDownList
                   ID="ddlDay"
                   runat="server"
-                  CssClass="form-control"
-                >
-                                    <asp:ListItem Text="Select a Day" selected disabled />
-<asp:ListItem Text="Saturday" Value="Saturday" />
-<asp:ListItem Text="Sunday" Value="Sunday" />
-<asp:ListItem Text="Monday" Value="Monday" />
-<asp:ListItem Text="Tuesday" Value="Tuesday" />
-<asp:ListItem Text="Wednesday" Value="Wednesday" />
-<asp:ListItem Text="Thursday" Value="Thursday" />
+                  CssClass="form-control">
+                  <asp:ListItem Text="Select a Day" Selected disabled />
+                  <asp:ListItem Text="Saturday" Value="Saturday" />
+                  <asp:ListItem Text="Sunday" Value="Sunday" />
+                  <asp:ListItem Text="Monday" Value="Monday" />
+                  <asp:ListItem Text="Tuesday" Value="Tuesday" />
+                  <asp:ListItem Text="Wednesday" Value="Wednesday" />
+                  <asp:ListItem Text="Thursday" Value="Thursday" />
                 </asp:DropDownList>
                 <asp:TextBox
                   ID="txtStartTime"
                   runat="server"
                   CssClass="form-control"
                   Placeholder="Start Time (HH:mm)"
-                  type="time"
-                />
+                  type="time" />
                 <asp:TextBox
                   ID="txtEndTime"
                   runat="server"
                   CssClass="form-control"
                   Placeholder="End Time (HH:mm)"
-                  type="time"
-                />
+                  type="time" />
                 <asp:DropDownList
                   ID="ddlRoom"
                   runat="server"
-                  CssClass="form-control"
-                ></asp:DropDownList>
-                <asp:DropDownList
-                  ID="ddlProfessor"
-                  runat="server"
-                  CssClass="form-control"
-                ></asp:DropDownList>
+                  CssClass="form-control">
+                </asp:DropDownList>
+                <asp:TextBox ID="txtProfessor" runat="server" CssClass="form-control" ReadOnly="true"  />
+                <asp:HiddenField ID="hdnProfessorId" runat="server" Value='<%# Eval("ProfessorID") %>' />
               </div>
               <div class="lectures-control-footer">
                 <asp:Button
@@ -78,8 +73,7 @@ Namespace="System.Web.UI" %>
                   runat="server"
                   CssClass="btn btn-primary"
                   Text="Save"
-                  OnClick="BtnAddOrUpdate_Click"
-                />
+                  OnClick="BtnAddOrUpdate_Click" />
                 <asp:Label ID="lblMessage" runat="server" CssClass="" />
               </div>
             </div>
@@ -94,83 +88,69 @@ Namespace="System.Web.UI" %>
                   ID="lblSectionName"
                   runat="server"
                   Text="Section Name:"
-                  CssClass="form-label section-name-lbl"
-                />
+                  CssClass="form-label section-name-lbl" />
                 <asp:TextBox
                   ID="txtSectionName"
                   runat="server"
                   class="form-control section-name-input"
                   ReadOnly="true"
-                  disabled
-                />
+                  disabled />
                 <asp:Label
                   ID="lblSectionDay"
                   runat="server"
                   Text="Day:"
-                  CssClass="form-label"
-                />
+                  CssClass="form-label" />
                 <asp:DropDownList
                   ID="ddlSectionDay"
                   runat="server"
-                  CssClass="form-control"
-                >
-                  <asp:ListItem Text="Select a Day" selected disabled />
-<asp:ListItem Text="Saturday" Value="Saturday" />
-<asp:ListItem Text="Sunday" Value="Sunday" />
-<asp:ListItem Text="Monday" Value="Monday" />
-<asp:ListItem Text="Tuesday" Value="Tuesday" />
-<asp:ListItem Text="Wednesday" Value="Wednesday" />
-<asp:ListItem Text="Thursday" Value="Thursday" />
-
+                  CssClass="form-control">
+                  <asp:ListItem Text="Select a Day" Selected disabled />
+                  <asp:ListItem Text="Saturday" Value="Saturday" />
+                  <asp:ListItem Text="Sunday" Value="Sunday" />
+                  <asp:ListItem Text="Monday" Value="Monday" />
+                  <asp:ListItem Text="Tuesday" Value="Tuesday" />
+                  <asp:ListItem Text="Wednesday" Value="Wednesday" />
+                  <asp:ListItem Text="Thursday" Value="Thursday" />
                 </asp:DropDownList>
                 <asp:Label
                   ID="lblSectionTime"
                   runat="server"
                   Text="Start Time:"
-                  CssClass="form-label"
-                />
+                  CssClass="form-label" />
                 <asp:TextBox
                   ID="txtSectionTime"
                   runat="server"
                   CssClass="form-control"
                   Placeholder="HH:mm"
-                  type="time"
-                />
+                  type="time" />
                 <asp:Label
                   ID="lblSectionEndTime"
                   runat="server"
                   Text="End Time:"
-                  CssClass="form-label"
-                />
+                  CssClass="form-label" />
                 <asp:TextBox
                   ID="txtSectionEndTime"
                   runat="server"
                   CssClass="form-control"
                   Placeholder="HH:mm"
-                  type="time"
-                />
+                  type="time" />
                 <asp:Label
                   ID="lblSectionRoom"
                   runat="server"
                   Text="Room:"
-                  CssClass="form-label"
-                />
+                  CssClass="form-label" />
                 <asp:DropDownList
                   ID="ddlSectionRoom"
                   runat="server"
-                  CssClass="form-control"
-                ></asp:DropDownList>
+                  CssClass="form-control">
+                </asp:DropDownList>
                 <asp:Label
                   ID="lblAssistantProfessor"
                   runat="server"
                   Text="Assistant Professor:"
-                  CssClass="form-label"
-                />
-                <asp:DropDownList
-                  ID="ddlAssistantProfessor"
-                  runat="server"
-                  CssClass="form-control"
-                ></asp:DropDownList>
+                  CssClass="form-label" />
+                <asp:TextBox ID="txtAssistantProfessor" runat="server" CssClass="form-control" ReadOnly="true" />
+                <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("AssistantProfessorID") %>' />
               </div>
               <div class="section-control-footer">
                 <asp:Button
@@ -178,8 +158,7 @@ Namespace="System.Web.UI" %>
                   runat="server"
                   CssClass="btn btn-primary"
                   Text="Save Section"
-                  OnClick="btnSaveSection_Click"
-                />
+                  OnClick="btnSaveSection_Click" />
                 <asp:Label ID="lblSectionMessage" runat="server" CssClass="" />
               </div>
             </div>
@@ -203,8 +182,7 @@ Namespace="System.Web.UI" %>
                   <asp:Repeater
                     ID="TimetableRepeater"
                     runat="server"
-                    OnItemCommand="TimetableRepeater_ItemCommand"
-                  >
+                    OnItemCommand="TimetableRepeater_ItemCommand">
                     <ItemTemplate>
                       <tr>
                         <td><%# Eval("Day") %></td>
@@ -222,8 +200,7 @@ Namespace="System.Web.UI" %>
                             CommandArgument='<%# Eval("TimetableID") %>'
                             OnCommand="TimetableRepeater_ItemCommand"
                             class="delete-btn"
-                            OnClientClick="return confirm('Are you sure you want to delete this timetable?');"
-                          />
+                            OnClientClick="return confirm('Are you sure you want to delete this timetable?');" />
                         </td>
                       </tr>
                     </ItemTemplate>
@@ -252,8 +229,7 @@ Namespace="System.Web.UI" %>
                     <asp:Repeater
                       ID="SectionsRepeater"
                       runat="server"
-                      OnItemCommand="SectionsRepeater_ItemCommand"
-                    >
+                      OnItemCommand="SectionsRepeater_ItemCommand">
                       <ItemTemplate>
                         <tr>
                           <td><%# Eval("SectionName") %></td>
@@ -270,8 +246,7 @@ Namespace="System.Web.UI" %>
                               CommandName="Delete"
                               CommandArgument='<%# Eval("SectionID") %>'
                               class="delete-btn"
-                              OnClientClick="return confirm('Are you sure you want to delete this timetable?');"
-                            />
+                              OnClientClick="return confirm('Are you sure you want to delete this timetable?');" />
                           </td>
                         </tr>
                       </ItemTemplate>
@@ -285,31 +260,4 @@ Namespace="System.Web.UI" %>
       </div>
     </div>
   </div>
-  <script
-    src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-  ></script>
-  <script>
-    $(document).ready(function () {
-      $("#txtStartTime").on("focus", function () {
-        if ($(this).val() == "HH:MM") {
-          $(this).val("");
-        }
-      });
-      $("#txtStartTime").on("blur", function () {
-        if ($(this).val() == "") {
-          $(this).val("HH:MM");
-        }
-      });
-      $("#txtEndTime").on("focus", function () {
-        if ($(this).val() == "HH:MM") {
-          $(this).val("");
-        }
-      });
-      $("#txtEndTime").on("blur", function () {
-        if ($(this).val() == "") {
-          $(this).val("HH:MM");
-        }
-      });
-    });
-  </script>
 </asp:Content>

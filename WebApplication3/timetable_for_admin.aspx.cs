@@ -17,8 +17,8 @@ namespace WebApplication3
         {
           LoadCourses();
           LoadRooms();
-          LoadProfessors();
-          LoadAssistantProfessors();
+          //LoadProfessors();
+          //LoadAssistantProfessors();
           LoadTimetableData();
         }
       }
@@ -83,46 +83,46 @@ namespace WebApplication3
       ddlSectionRoom.Items.Insert(0, new ListItem("Select a Room", "0"));
     }
 
-    private void LoadProfessors()
-    {
-      using (SqlConnection conn = new SqlConnection(connectionString))
-      {
-        conn.Open();
-        string query = "SELECT ProfessorID, FirstName + ' ' + LastName AS ProfessorName FROM Professors";
-        using (SqlCommand cmd = new SqlCommand(query, conn))
-        {
-          using (SqlDataReader reader = cmd.ExecuteReader())
-          {
-            ddlProfessor.DataSource = reader;
-            ddlProfessor.DataTextField = "ProfessorName";
-            ddlProfessor.DataValueField = "ProfessorID";
-            ddlProfessor.DataBind();
-          }
-        }
-      }
-      ddlProfessor.Items.Insert(0, new ListItem("Select a Professor", "0"));
-    }
+    //private void LoadProfessors()
+    //{
+    //  using (SqlConnection conn = new SqlConnection(connectionString))
+    //  {
+    //    conn.Open();
+    //    string query = "SELECT ProfessorID, FirstName + ' ' + LastName AS ProfessorName FROM Professors";
+    //    using (SqlCommand cmd = new SqlCommand(query, conn))
+    //    {
+    //      using (SqlDataReader reader = cmd.ExecuteReader())
+    //      {
+    //        ddlProfessor.DataSource = reader;
+    //        ddlProfessor.DataTextField = "ProfessorName";
+    //        ddlProfessor.DataValueField = "ProfessorID";
+    //        ddlProfessor.DataBind();
+    //      }
+    //    }
+    //  }
+    //  ddlProfessor.Items.Insert(0, new ListItem("Select a Professor", "0"));
+    //}
 
     // Load assistant professors into ddlAssistantProfessor
-    private void LoadAssistantProfessors()
-    {
-      using (SqlConnection conn = new SqlConnection(connectionString))
-      {
-        conn.Open();
-        string query = "SELECT AssistantProfessorID, FirstName + ' ' + LastName AS AssistantProfessorName FROM AssistantProfessors";
-        using (SqlCommand cmd = new SqlCommand(query, conn))
-        {
-          using (SqlDataReader reader = cmd.ExecuteReader())
-          {
-            ddlAssistantProfessor.DataSource = reader;
-            ddlAssistantProfessor.DataTextField = "AssistantProfessorName";
-            ddlAssistantProfessor.DataValueField = "AssistantProfessorID";
-            ddlAssistantProfessor.DataBind();
-          }
-        }
-      }
-      ddlAssistantProfessor.Items.Insert(0, new ListItem("Select an Assistant Professor", "0"));
-    }
+    //private void LoadAssistantProfessors()
+    //{
+    //  using (SqlConnection conn = new SqlConnection(connectionString))
+    //  {
+    //    conn.Open();
+    //    string query = "SELECT AssistantProfessorID, FirstName + ' ' + LastName AS AssistantProfessorName FROM AssistantProfessors";
+    //    using (SqlCommand cmd = new SqlCommand(query, conn))
+    //    {
+    //      using (SqlDataReader reader = cmd.ExecuteReader())
+    //      {
+    //        ddlAssistantProfessor.DataSource = reader;
+    //        ddlAssistantProfessor.DataTextField = "AssistantProfessorName";
+    //        ddlAssistantProfessor.DataValueField = "AssistantProfessorID";
+    //        ddlAssistantProfessor.DataBind();
+    //      }
+    //    }
+    //  }
+    //  ddlAssistantProfessor.Items.Insert(0, new ListItem("Select an Assistant Professor", "0"));
+    //}
 
   
     private void LoadTimetableData()
@@ -161,7 +161,7 @@ namespace WebApplication3
         {
           conn.Open();
           string query = @"
-                        SELECT s.SectionID, s.SectionName, s.Day, s.StartTime, s.EndTime, r.RoomName, ap.FirstName + ' ' + ap.LastName AS AssistantProfessorName
+                        SELECT s.SectionID, s.SectionName, s.Day, s.StartTime, s.EndTime, r.RoomName, ap.AssistantProfessorID, ap.FirstName + ' ' + ap.LastName AS AssistantProfessorName
                         FROM Sections s
                         JOIN Rooms r ON s.RoomID = r.RoomID
                         JOIN AssistantProfessors ap ON s.AssistantProfessorID = ap.AssistantProfessorID
@@ -210,7 +210,7 @@ namespace WebApplication3
     }
 
     
-    protected void BtnAddOrUpdate_Click(object sender, EventArgs e)
+protected void BtnAddOrUpdate_Click(object sender, EventArgs e)
     {
       //Retrive Data
       int courseID = Convert.ToInt32(ddlCourse.SelectedValue);
@@ -218,7 +218,7 @@ namespace WebApplication3
       TimeSpan startTime = TimeSpan.Parse(txtStartTime.Text);
       TimeSpan endTime = TimeSpan.Parse(txtEndTime.Text);
       int roomID = Convert.ToInt32(ddlRoom.SelectedValue);
-      int professorID = Convert.ToInt32(ddlProfessor.SelectedValue);
+      int professorID = Convert.ToInt32(hdnProfessorId.Value); // Assuming you have a TextBox control for professor ID
 
       if (!IsTimetableConflict(courseID, day, startTime, endTime, roomID, professorID))
       {
@@ -232,7 +232,6 @@ namespace WebApplication3
         lblMessage.CssClass = "text-danger";
       }
 
-     
       LoadTimetableData();
     }
     // Save timetable entry
@@ -318,6 +317,11 @@ namespace WebApplication3
 
     protected void ddlCourse_SelectedIndexChanged(object sender, EventArgs e)
     {
+      string selectedCourse = ddlCourse.SelectedValue;
+      string professorName = GetProfessorNameByCourse(selectedCourse);
+      string assistantProfessorName = GetAssistantProfessorNameByCourse(selectedCourse);
+      txtProfessor.Text = professorName;
+      txtAssistantProfessor.Text = assistantProfessorName;
       int courseID = Convert.ToInt32(ddlCourse.SelectedValue);
       if (courseID > 0)
       {
@@ -382,7 +386,7 @@ namespace WebApplication3
         return;
       }
 
-      if (!int.TryParse(ddlAssistantProfessor.SelectedValue, out int assistantProfessorID))
+      if (!int.TryParse(HiddenField1.Value, out int assistantProfessorID))
       {
         lblSectionMessage.Text = "Please select a valid assistant professor.";
         return;
@@ -610,6 +614,60 @@ namespace WebApplication3
 
       // Redirect to the login page or any other appropriate page
       Response.Redirect("Login.aspx");
+    }
+    private string GetAssistantProfessorNameByCourse(string courseID)
+    {
+      string assistantProfessorName = "";
+      string assistantProfessorId = "";
+
+      // Connect to the database and fetch the assistant professor's name
+      string query = "SELECT AP.FirstName, AP.LastName, AP.AssistantProfessorID FROM AssistantProfessors AP INNER JOIN Courses C ON AP.AssistantProfessorID = C.AssistantProfessorID WHERE C.CourseID = @CourseID";
+      using (SqlConnection conn = new SqlConnection(connectionString))
+      {
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+        {
+          cmd.Parameters.AddWithValue("@CourseID", courseID);
+          conn.Open();
+          using (SqlDataReader reader = cmd.ExecuteReader())
+          {
+            if (reader.Read())
+            {
+              assistantProfessorName = reader["FirstName"].ToString() + " " + reader["LastName"].ToString();
+              assistantProfessorId = reader["AssistantProfessorID"].ToString();
+            }
+          }
+          conn.Close();
+        }
+      }
+
+      return assistantProfessorName;
+    }
+    private string GetProfessorNameByCourse(string courseID)
+    {
+      string professorName = "";
+      string professorId = "";
+
+      // Connect to the database and fetch the professor's name
+      string query = "SELECT P.FirstName, P.LastName, P.ProfessorID FROM Professors P INNER JOIN Courses C ON P.ProfessorID = C.ProfessorID WHERE C.CourseID = @CourseID";
+      using (SqlConnection conn = new SqlConnection(connectionString))
+      {
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+        {
+          cmd.Parameters.AddWithValue("@CourseID", courseID);
+          conn.Open();
+          using (SqlDataReader reader = cmd.ExecuteReader())
+          {
+            if (reader.Read())
+            {
+              professorName = reader["FirstName"].ToString() + " " + reader["LastName"].ToString();
+              professorId = reader["ProfessorID"].ToString();
+            }
+          }
+          conn.Close();
+        }
+      }
+
+      return professorName;
     }
 
   }

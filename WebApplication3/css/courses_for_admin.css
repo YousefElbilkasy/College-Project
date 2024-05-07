@@ -1,59 +1,11 @@
 header.courses-header,
 footer {
-  background-color: var(
-    --main-color
-  ); /* Set header and footer background color to var(--main-color) */
-  color: var(
-    --fifth-color
-  ); /* Set header and footer text color to var(--fifth-color) */
+  background-color: var(--main-color);
+  color: var(--fifth-color);
   text-align: center;
   padding: 20px 0;
 }
 
-.courses-container {
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.course-card {
-  background-color: var(
-    --fifth-color
-  ); /* Set background color of cards to var(--fifth-color) */
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: calc(33.33% - 40px); /* Set width for three cards in a row */
-  cursor: pointer;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-  text-decoration: none; /* Remove underline from anchor tag */
-  color: black; /* Set text color */
-  box-sizing: border-box; /* Include padding and border in the total width */
-}
-
-.course-card:hover {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  border: 2px solid var(--main-color); /* Add var(--main-color) border on hover */
-}
-
-.course-card h2 {
-  color: var(--main-color); /* Set course title color to var(--main-color) */
-  margin-bottom: 10px;
-  position: relative;
-  display: inline-block;
-}
-
-.course-card h2::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: var(--main-color); /* Set line color to var(--main-color) */
-}
 
 .big-container .first-column-container div a.courses-link {
   padding-left: 15px;
@@ -65,4 +17,152 @@ footer {
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   border-radius: 10px;
+}
+
+.courses-container {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.new-course-card {
+  padding: 15px;
+  margin: 15px;
+  width: 100%;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.new-course-card input[type="submit"] {
+  background-color: var(--main-color);
+  color: var(--fifth-color);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-course-card input[type="submit"]:hover {
+  background-color: #007bff;
+}
+
+.card-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-member:last-child {
+  width: 48%;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.form-member:last-child input {
+  -webkit-transform: scale(1.3);
+  -moz-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  -o-transform: scale(1.3);
+  transform: scale(1.3);
+}
+
+.form-member:last-child label {
+  font-weight: bold;
+  margin: 5px;
+
+}
+
+.form-member:not(:last-child) {
+  width: 48%;
+  padding: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.form-member:not(:last-child)::placeholder {
+  color: black;
+}
+
+.form-member:not(:last-child):focus {
+  outline: 2px solid var(--main-color);
+}
+
+.new-course-card .card-footer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.new-course-card .card-head {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.course-card {
+  background-color: #fff;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.course-card:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  outline: 2px solid var(--main-color);
+  -webkit-transform: scale(1.02);
+  -moz-transform: scale(1.02);
+  -ms-transform: scale(1.02);
+  -o-transform: scale(1.02);
+  transform: scale(1.02);
+}
+
+.card-head p,
+.card-content p,
+.card-footer p {
+  margin: 5px 0;
+}
+
+.card-head p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card-content p {
+  font-size: 16px;
+  width: 50%;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-card .card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
 }

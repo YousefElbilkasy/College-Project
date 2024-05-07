@@ -19,6 +19,8 @@ namespace WebApplication3
         {
           // Load and bind current courses when the page loads for the first time
           BindCurrentCourses();
+          BindProfessors();
+          BindAssistantProfessors();
         }
       }
       else
@@ -28,11 +30,57 @@ namespace WebApplication3
       }
     }
 
+    private void BindProfessors()
+    {
+      string query = "SELECT ProfessorID, FirstName + ' ' + ISNULL(MiddleName, '') + ' ' + LastName AS FullName FROM Professors";
+
+      using (SqlConnection conn = new SqlConnection(connectionString))
+      {
+        conn.Open();
+
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+        {
+          using (SqlDataReader reader = cmd.ExecuteReader())
+          {
+            ddlProfessors.DataSource = reader;
+            ddlProfessors.DataValueField = "ProfessorID";
+            ddlProfessors.DataTextField = "FullName";
+            ddlProfessors.DataBind();
+          }
+        }
+      }
+      ddlProfessors.Items.Insert(0, new ListItem("Select a professor", ""));
+    }
+
+    private void BindAssistantProfessors()
+    {
+      string query = "SELECT AssistantProfessorID, FirstName + ' ' + ISNULL(MiddleName, '') + ' ' + LastName AS FullName FROM AssistantProfessors";
+
+      using (SqlConnection conn = new SqlConnection(connectionString))
+      {
+        conn.Open();
+
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+        {
+          using (SqlDataReader reader = cmd.ExecuteReader())
+          {
+            ddlAssistantProfessors.DataSource = reader;
+            ddlAssistantProfessors.DataValueField = "AssistantProfessorID";
+            ddlAssistantProfessors.DataTextField = "FullName";
+            ddlAssistantProfessors.DataBind();
+          }
+        }
+      }
+      ddlAssistantProfessors.Items.Insert(0, new ListItem("Select an assistant professor", ""));
+    }
+
     protected void BtnAddCourse_Click(object sender, EventArgs e)
     {
       // Retrieve input values
       string courseName = txtCourseName.Text;
       bool hasSection = chkHasSection.Checked;
+      int professorId = int.Parse(ddlProfessors.SelectedValue);
+      int? assistantProfessorId = chkHasSection.Checked ? int.Parse(ddlAssistantProfessors.SelectedValue) : (int?)null;
 
       // Validate course hours input
       if (!int.TryParse(txtCourseHours.Text, out int courseHours))
@@ -41,8 +89,20 @@ namespace WebApplication3
         return;
       }
 
+      if (ddlProfessors.SelectedValue == "")
+      {
+        lblMessage.Text = "Please select a professor.";
+        return;
+      }
+
+      if (chkHasSection.Checked && ddlAssistantProfessors.SelectedValue == "")
+      {
+        lblMessage.Text = "Please select an assistant professor.";
+        return;
+      }
+
       // SQL query to insert the new course
-      string query = "INSERT INTO Courses (CourseName, Hours, HasSection) VALUES (@CourseName, @Hours, @HasSection)";
+      string query = "INSERT INTO Courses (CourseName, Hours, HasSection, ProfessorID, AssistantProfessorID) VALUES (@CourseName, @Hours, @HasSection, @ProfessorID, @AssistantProfessorID)";
 
       try
       {
@@ -57,6 +117,8 @@ namespace WebApplication3
             cmd.Parameters.AddWithValue("@CourseName", courseName);
             cmd.Parameters.AddWithValue("@Hours", courseHours);
             cmd.Parameters.AddWithValue("@HasSection", hasSection);
+            cmd.Parameters.AddWithValue("@ProfessorID", professorId);
+            cmd.Parameters.AddWithValue("@AssistantProfessorID", assistantProfessorId ?? (object)DBNull.Value);
 
             // Execute the query
             cmd.ExecuteNonQuery();
@@ -78,8 +140,25 @@ namespace WebApplication3
 
     private void BindCurrentCourses()
     {
-      // SQL query to fetch courses from the database
-      string query = "SELECT CourseID, CourseName, Hours, HasSection FROM Courses";
+      // SQL query to fetch courses and their professors from the database
+      string query = @"SELECT 
+                        Courses.CourseID, 
+                        Courses.CourseName, 
+                        Courses.Hours,
+                        Courses.HasSection,
+                        Professors.FirstName + ' ' + ISNULL(Professors.MiddleName, '') + ' ' + Professors.LastName AS ProfessorFullName,
+                        CASE 
+                          WHEN Sections.CourseID IS NOT NULL THEN AssistantProfessors.FirstName + ' ' + ISNULL(AssistantProfessors.MiddleName, '') + ' ' + AssistantProfessors.LastName
+                          ELSE NULL
+                        END AS AssistantProfessorFullName
+                      FROM 
+                        Courses
+                      LEFT JOIN 
+                        Professors ON Courses.ProfessorID = Professors.ProfessorID
+                      LEFT JOIN 
+                        Sections ON Courses.CourseID = Sections.CourseID
+                      LEFT JOIN 
+                        AssistantProfessors ON Sections.AssistantProfessorID = AssistantProfessors.AssistantProfessorID";
 
       try
       {
@@ -115,5 +194,9 @@ namespace WebApplication3
       Response.Redirect("Login.aspx");
     }
 
+    protected void chkHasSection_CheckedChanged(object sender, EventArgs e)
+    {
+      ddlAssistantProfessors.Visible = chkHasSection.Checked;
+    }
   }
 }

@@ -242,18 +242,15 @@
   /* space between icons */
 }
 
-.student-card .student-card-body .div-student-card-actions i {
+.student-card .student-card-body .div-student-card-actions .delete-btn {
   cursor: pointer;
-}
-
-.student-card .student-card-body .div-student-card-actions .fa-edit {
-  /* color: #007bff; */
-  color: var(--main-color);
-}
-
-.student-card .student-card-body .div-student-card-actions .fa-trash {
-  /* color: #dc3545; */
-  color: var(--main-color);
+  color: white;
+  background-color: #dc3545;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
 }
 
 .overlay {

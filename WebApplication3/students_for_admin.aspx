@@ -52,22 +52,24 @@ Inherits="WebApplication3.students_for_admin" %>
               Date of Birth: <%# ((DateTime)Eval("DateOfBirth")).ToString("dd-MM-yyyy") %>
             </p>
             <p class="student-card-info">Gender: <%# Eval("Gender") %></p>
-            <asp:Button
+            </div>
+            <div class="div-student-card-actions">
+              <asp:Button
               ID="DeleteBtn"
               runat="server"
               Text="Delete"
               CommandArgument='<%# Eval("StudentID") %>'
               OnClick="confirmDeleteBtn_Click"
               CssClass="delete-btn"
-            />
+              OnClientClick="return confirm('Are You Sure You Want to Delete This Student?');"
+              />
+            </div>
           </div>
         </div>
-      </div>
- </div>
     </ItemTemplate>
   </asp:Repeater>
 
-  <!-- Modal for Add student -->
+  <!--? Modal for Add student -->
   <div id="addStudentModal" class="overlay">
     <div class="modal">
       <span class="close">&times;</span>

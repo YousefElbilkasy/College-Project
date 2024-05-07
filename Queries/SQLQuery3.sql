@@ -73,3 +73,123 @@ VALUES
 (5, 5, 70.5); -- William got 70.5% in Computer Science
 
 --======================================
+
+-- Inserting sample data into Professors table
+insert into Professors
+  (FirstName, LastName, ContactNumber, NationalID, Email, Password, DateOfBirth, Gender, IsVerified)
+values
+  ('John', 'Doe', '1234567890', '12345678901234', 'john.doe@example.com', 'password123', '1980-05-15', 'Male', 1),
+  ('Jane', 'Smith', '0987654321', '98765432109876', 'jane.smith@example.com', 'password456', '1975-10-20', 'Female', 1),
+  ('Michael', 'Johnson', '1112223333', '11122233334444', 'michael.johnson@example.com', 'password789', '1988-03-25', 'Male', 1),
+  ('Emily', 'Brown', '4445556666', '44455566667777', 'emily.brown@example.com', 'passwordabc', '1990-12-10', 'Female', 1),
+  ('David', 'Martinez', '7778889999', '77788899991111', 'david.martinez@example.com', 'passwordxyz', '1982-08-07', 'Male', 1);
+
+-- Inserting sample data into AssistantProfessors table
+insert into AssistantProfessors
+  (FirstName, LastName, ContactNumber, NationalID, Email, Password, DateOfBirth, Gender, IsVerified)
+values
+  ('Emma', 'Wilson', '3334445555', '33344455556666', 'emma.wilson@example.com', 'pass123', '1985-07-20', 'Female', 1),
+  ('James', 'Taylor', '6667778888', '66677788889999', 'james.taylor@example.com', 'pass456', '1987-09-12', 'Male', 1),
+  ('Olivia', 'Martinez', '9990001111', '99900011112222', 'olivia.martinez@example.com', 'pass789', '1991-04-30', 'Female', 1),
+  ('Daniel', 'Anderson', '2223334444', '22233344445555', 'daniel.anderson@example.com', 'passabc', '1983-11-18', 'Male', 1),
+  ('Sophia', 'Garcia', '5556667777', '55566677778888', 'sophia.garcia@example.com', 'passxyz', '1980-02-28', 'Female', 1);
+
+-- Inserting sample data into Courses table
+insert into Courses
+  (CourseName, ProfessorID, AssistantProfessorID, Hours, [Time], HasSection, CourseTime)
+values
+  ('Mathematics', 1, 2, 4, 1, 1, '08:00:00'),
+  ('Physics', 3, 4, 3, 2, 0, '10:00:00'),
+  ('Chemistry', 5, null, 3, 3, 1, '14:00:00'),
+  ('Biology', 2, 3, 4, 4, 0, '11:00:00'),
+  ('English Literature', 4, 5, 3, 5, 1, '13:00:00');
+
+-- Inserting sample data into Rooms table
+insert into Rooms
+  (RoomName, Capacity)
+values
+  ('Room A', 30),
+  ('Room B', 25),
+  ('Room C', 35),
+  ('Room D', 40),
+  ('Room E', 20);
+
+-- Inserting sample data into Sections table
+insert into Sections
+  (CourseID, SectionName, AssistantProfessorID, Day, StartTime, EndTime, RoomID)
+values
+  (1, 'Section A', 2, 'Monday', '08:00:00', '10:00:00', 1),
+  (1, 'Section B', 3, 'Wednesday', '10:00:00', '12:00:00', 2),
+  (2, 'Section C', 4, 'Thursday', '14:00:00', '16:00:00', 3),
+  (4, 'Section D', 3, 'Tuesday', '11:00:00', '13:00:00', 4),
+  (5, 'Section E', 5, 'Friday', '13:00:00', '15:00:00', 5);
+
+-- Inserting sample data into Timetable table
+insert into Timetable
+  (CourseID, ProfessorID, RoomID, Day, StartTime, EndTime)
+values
+  (1, 1, 1, 'Monday', '08:00:00', '10:00:00'),
+  (2, 3, 2, 'Wednesday', '10:00:00', '12:00:00'),
+  (3, 5, 3, 'Thursday', '14:00:00', '16:00:00'),
+  (4, 2, 4, 'Tuesday', '11:00:00', '13:00:00'),
+  (5, 4, 5, 'Friday', '13:00:00', '15:00:00');
+
+-- Inserting sample data into Students table
+insert into Students
+  (FirstName, LastName, ContactNumber, NationalID, Email, Password, DateOfBirth, ClassLevel, Gender, IsVerified)
+values
+  ('Michael', 'Johnson', '1231231231', '12345678901231', 'michael.johnson@student.com', 'student123', '2002-01-15', 'Senior', 'Male', 1),
+  ('Sophia', 'Brown', '4564564564', '98765432109876', 'sophia.brown@student.com', 'student456', '2003-05-20', 'Junior', 'Female', 1),
+  ('Ethan', 'Martinez', '7897897897', '77788899991111', 'ethan.martinez@student.com', 'student789', '2001-11-30', 'Senior', 'Male', 1),
+  ('Isabella', 'Smith', '9876543219', '44455566667777', 'isabella.smith@student.com', 'studentabc', '2002-08-18', 'Junior', 'Female', 1),
+  ('William', 'Garcia', '3213213213', '55566677778888', 'william.garcia@student.com', 'studentxyz', '2004-03-28', 'Sophomore', 'Male', 1);
+
+-- Inserting sample data into AssistantProfessorCourses table
+insert into AssistantProfessorCourses
+  (AssistantProfessorID, CourseID)
+values
+  (2, 1),
+  (3, 2),
+  (4, 3),
+  (3, 4),
+  (5, 5);
+
+-- Inserting sample data into ProfessorCourses table
+insert into ProfessorCourses
+  (ProfessorID, CourseID)
+values
+  (1, 1),
+  (3, 2),
+  (5, 3),
+  (2, 4),
+  (4, 5);
+
+-- Inserting sample data into StudentsCourses table
+insert into StudentsCourses
+  (StudentID, CourseID)
+values
+  (1, 1),
+  (2, 2),
+  (3, 3),
+  (4, 4),
+  (5, 5);
+
+-- Inserting sample data into Grades table
+insert into Grades
+  (StudentID, CourseID, Grade)
+values
+  (1, 1, 85.5),
+  (2, 2, 90.0),
+  (3, 3, 88.2),
+  (4, 4, 92.7),
+  (5, 5, 87.9);
+
+-- Inserting sample data into StudentAttendance table
+insert into StudentAttendance
+  (StudentID, CourseID, Attendance)
+values
+  (1, 1, 25),
+  (2, 2, 28),
+  (3, 3, 30),
+  (4, 4, 27),
+  (5, 5, 29);

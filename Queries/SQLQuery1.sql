@@ -60,12 +60,12 @@ CREATE TABLE StudentAttendance (
     FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
 );
 
-INSERT INTO AssistantProfessorCourses (AssistantProfessorID, CourseID)
-VALUES (1, 2);
+-- INSERT INTO AssistantProfessorCourses (AssistantProfessorID, CourseID)
+-- VALUES (1, 2);
 
-INSERT INTO ProfessorCourses (ProfessorID, CourseID)
-VALUES (2, 1);
+-- INSERT INTO ProfessorCourses (ProfessorID, CourseID)
+-- VALUES (2, 1);
 
-INSERT INTO StudentsCourses (StudentID, CourseID)
-VALUES (1, 1),
-       (2, 2);
+-- INSERT INTO StudentsCourses (StudentID, CourseID)
+-- VALUES (1, 1),
+--        (2, 2);

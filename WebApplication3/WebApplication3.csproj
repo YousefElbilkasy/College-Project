@@ -115,6 +115,7 @@
   <ItemGroup>
     <Content Include="assignment_for_student.aspx" />
     <Content Include="ass_prof_for_admin.aspx" />
+    <Content Include="attendance_for_prof.aspx" />
     <Content Include="attendance_for_prof_trail.aspx" />
     <Content Include="attendance_for_student.aspx" />
     <Content Include="courses_for_admin.aspx" />
@@ -149,6 +150,13 @@
     </Compile>
     <Compile Include="ass_prof_for_admin.aspx.designer.cs">
       <DependentUpon>ass_prof_for_admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="attendance_for_prof.aspx.cs">
+      <DependentUpon>attendance_for_prof.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="attendance_for_prof.aspx.designer.cs">
+      <DependentUpon>attendance_for_prof.aspx</DependentUpon>
     </Compile>
     <Compile Include="attendance_for_prof_trail.aspx.cs">
       <DependentUpon>attendance_for_prof_trail.aspx</DependentUpon>

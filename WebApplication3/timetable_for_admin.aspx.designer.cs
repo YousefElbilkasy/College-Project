@@ -60,13 +60,22 @@ namespace WebApplication3
     protected global::System.Web.UI.WebControls.DropDownList ddlRoom;
 
     /// <summary>
-    /// ddlProfessor control.
+    /// txtProfessor control.
     /// </summary>
     /// <remarks>
     /// Auto-generated field.
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
-    protected global::System.Web.UI.WebControls.DropDownList ddlProfessor;
+    protected global::System.Web.UI.WebControls.TextBox txtProfessor;
+
+    /// <summary>
+    /// hdnProfessorId control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.HiddenField hdnProfessorId;
 
     /// <summary>
     /// btnAddOrUpdate control.
@@ -195,13 +204,22 @@ namespace WebApplication3
     protected global::System.Web.UI.WebControls.Label lblAssistantProfessor;
 
     /// <summary>
-    /// ddlAssistantProfessor control.
+    /// txtAssistantProfessor control.
     /// </summary>
     /// <remarks>
     /// Auto-generated field.
     /// To modify move field declaration from designer file to code-behind file.
     /// </remarks>
-    protected global::System.Web.UI.WebControls.DropDownList ddlAssistantProfessor;
+    protected global::System.Web.UI.WebControls.TextBox txtAssistantProfessor;
+
+    /// <summary>
+    /// HiddenField1 control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
 
     /// <summary>
     /// btnSaveSection control.
@@ -212,14 +230,23 @@ namespace WebApplication3
     /// </remarks>
     protected global::System.Web.UI.WebControls.Button btnSaveSection;
 
-        /// <summary>
-        /// lblSectionMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSectionMessage;
+    /// <summary>
+    /// lblSectionMessage control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Label lblSectionMessage;
+
+    /// <summary>
+    /// TimetableRepeater control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Repeater TimetableRepeater;
 
     /// <summary>
     /// sectionTable control.
@@ -230,22 +257,13 @@ namespace WebApplication3
     /// </remarks>
     protected global::System.Web.UI.HtmlControls.HtmlGenericControl sectionTable;
 
-        /// <summary>
-        /// SectionsRepeater control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater SectionsRepeater;
-
-        /// <summary>
-        /// TimetableRepeater control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater TimetableRepeater;
-    }
+    /// <summary>
+    /// SectionsRepeater control.
+    /// </summary>
+    /// <remarks>
+    /// Auto-generated field.
+    /// To modify move field declaration from designer file to code-behind file.
+    /// </remarks>
+    protected global::System.Web.UI.WebControls.Repeater SectionsRepeater;
+  }
 }
